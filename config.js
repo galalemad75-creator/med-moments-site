@@ -218,7 +218,7 @@ const DB = {
   login(email, password) {
     const e = String(email || '').trim();
     const p = String(password || '').trim();
-    if (e === 'emadh5156@gmail.com' && p === 'HealTunes2026') return true;
+    if (e === 'emadh5156@gmail.com' && p === 'heal2026') return true;
     const admin = this._cache?.admin;
     if (admin && e === String(admin.email || '').trim() && p === String(admin.password || '').trim()) return true;
     return false;
