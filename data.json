@@ -1,0 +1,25 @@
+{
+  "chapters": [
+    { "id": 1, "name": "Heart Health", "icon": "❤️", "songs": [] },
+    { "id": 2, "name": "Brain & Mind", "icon": "🧠", "songs": [] },
+    { "id": 3, "name": "Lungs & Breathing", "icon": "🫁", "songs": [] },
+    { "id": 4, "name": "Digestive System", "icon": "🫃", "songs": [] },
+    { "id": 5, "name": "Bones & Joints", "icon": "🦴", "songs": [] },
+    { "id": 6, "name": "Muscles", "icon": "💪", "songs": [] },
+    { "id": 7, "name": "Eyes & Vision", "icon": "👁️", "songs": [] },
+    { "id": 8, "name": "Ears & Hearing", "icon": "👂", "songs": [] },
+    { "id": 9, "name": "Skin Care", "icon": "🧴", "songs": [] },
+    { "id": 10, "name": "Dental Health", "icon": "🦷", "songs": [] },
+    { "id": 11, "name": "Immune System", "icon": "🛡️", "songs": [] },
+    { "id": 12, "name": "Mental Health", "icon": "🧘", "songs": [] },
+    { "id": 13, "name": "Nutrition", "icon": "🥗", "songs": [] },
+    { "id": 14, "name": "Sleep & Rest", "icon": "😴", "songs": [] },
+    { "id": 15, "name": "Exercise & Fitness", "icon": "🏃", "songs": [] },
+    { "id": 16, "name": "First Aid", "icon": "🩹", "songs": [] }
+  ],
+  "nextId": { "chapter": 17, "song": 1 },
+  "admin": {
+    "email": "emadh5156@gmail.com",
+    "password": "HealTunes2026!"
+  }
+}

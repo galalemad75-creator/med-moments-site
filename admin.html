@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — HealTunes</title>
+<meta name="robots" content="noindex, nofollow">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FFF8F0;--bg2:#FFF0E0;--card:#FFF;--text:#2D2D2D;--text2:#666;--primary:#0891B2;--primary-dark:#0E7490;--border:#FFE0C0;--green:#6BCB77;--red:#FF6B6B;--shadow:rgba(8,145,178,.1)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+/* Login */
+.login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.login-box{background:var(--card);border:2px solid var(--border);border-radius:20px;padding:40px;max-width:400px;width:100%;text-align:center;box-shadow:0 10px 40px var(--shadow)}
+.login-box .icon{font-size:3.5rem;margin-bottom:12px;display:block}
+.login-box h2{font-size:1.4rem;margin-bottom:6px;color:var(--primary)}
+.login-box p{color:var(--text2);margin-bottom:20px;font-size:.9rem}
+.login-box input{width:100%;padding:14px;border:2px solid var(--border);border-radius:12px;font-size:1rem;text-align:center;font-family:inherit;margin-bottom:12px}
+.login-box input:focus{border-color:var(--primary);outline:none}
+.login-box button{width:100%;padding:14px;background:var(--primary);color:#fff;border:none;border-radius:12px;font-size:1rem;font-weight:700;cursor:pointer;font-family:inherit}
+.login-box button:hover{background:var(--primary-dark)}
+.login-err{color:var(--red);font-weight:600;font-size:.85rem;margin-top:8px;min-height:20px}
+.login-back{display:block;margin-top:16px;color:var(--text2);font-size:.85rem}
+
+/* Dashboard */
+.dash{display:none}.dash.show{display:block}
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;background:#fff;border-bottom:2px solid var(--border);padding:0 20px;height:56px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 10px var(--shadow)}
+.nav .logo{font-weight:800;color:var(--primary);font-size:1.1rem}
+.nav .nav-r{display:flex;gap:8px}
+.nav .nav-r a,.nav .nav-r button{padding:7px 14px;border-radius:8px;font-weight:600;font-size:.82rem;cursor:pointer;font-family:inherit;border:none}
+.nav .home{background:var(--bg2);color:var(--primary);text-decoration:none;border:1px solid var(--border)}
+.nav .logout{background:var(--red);color:#fff}
+
+.wrap{padding:72px 20px 40px;max-width:900px;margin:0 auto}
+
+/* Stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
+.stat{background:var(--card);border:2px solid var(--border);border-radius:12px;padding:14px;text-align:center}
+.stat .n{font-size:1.5rem;font-weight:900;color:var(--primary);display:block}
+.stat .l{font-size:.75rem;color:var(--text2)}
+
+/* Tabs */
+.tabs{display:flex;gap:6px;margin-bottom:18px;flex-wrap:wrap}
+.tab{padding:8px 18px;border-radius:20px;background:var(--card);border:2px solid var(--border);color:var(--text2);font-weight:700;cursor:pointer;font-size:.85rem;font-family:inherit;transition:.2s}
+.tab.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+.panel{display:none}.panel.active{display:block}
+
+/* Form card */
+.card{background:var(--card);border:2px solid var(--border);border-radius:14px;padding:20px;margin-bottom:16px}
+.card h3{font-size:1rem;margin-bottom:14px;color:var(--primary)}
+.fr{margin-bottom:12px}
+.fr label{display:block;font-weight:700;font-size:.85rem;margin-bottom:4px}
+.fr input,.fr select{width:100%;padding:10px 14px;border:2px solid var(--border);border-radius:10px;font-size:.9rem;font-family:inherit}
+.fr input:focus,.fr select:focus{border-color:var(--primary);outline:none}
+.fr .hint{font-size:.75rem;color:var(--text2);margin-top:2px}
+
+/* File input */
+.file-wrap{position:relative}
+.file-wrap input[type="file"]{position:absolute;opacity:0;width:100%;height:100%;cursor:pointer;z-index:2}
+.file-label{display:block;padding:14px;background:var(--bg);border:2px dashed var(--border);border-radius:10px;text-align:center;color:var(--text2);font-weight:600;cursor:pointer;font-size:.85rem;transition:.2s}
+.file-label:hover{border-color:var(--primary);color:var(--primary)}
+
+/* Upload progress */
+.up-bar{display:none;margin-top:10px;padding:10px;background:var(--bg2);border-radius:8px;font-size:.85rem}
+.up-bar .bar{height:6px;background:var(--border);border-radius:3px;margin-top:6px;overflow:hidden}
+.up-bar .fill{height:100%;background:var(--primary);border-radius:3px;width:0%;transition:.3s}
+
+/* Chapter list */
+.ch-list{display:flex;flex-direction:column;gap:8px}
+.ch-item{background:var(--card);border:2px solid var(--border);border-radius:12px;padding:14px 16px}
+.ch-head{display:flex;align-items:center;gap:12px}
+.ch-head .icon{font-size:1.4rem}
+.ch-head .info{flex:1}
+.ch-head .name{font-weight:700;font-size:.9rem}
+.ch-head .count{font-size:.78rem;color:var(--text2)}
+.ch-head .acts{display:flex;gap:4px}
+.song-list{margin-top:8px;margin-left:20px}
+.song-row{display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--bg2);border-radius:8px;margin-bottom:4px}
+.song-row .title{flex:1;font-weight:600;font-size:.82rem}
+.song-row .url{font-size:.7rem;color:var(--text2);max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.song-row img{width:36px;height:36px;border-radius:6px;object-fit:cover}
+
+/* Buttons */
+.bs{padding:5px 12px;border-radius:6px;font-size:.75rem;font-weight:700;border:none;cursor:pointer;font-family:inherit}
+.bs.red{background:var(--red);color:#fff}
+.bs.blue{background:var(--primary);color:#fff}
+.bs.green{background:var(--green);color:#fff}
+.bs.ghost{background:var(--bg2);color:var(--text2);border:1px solid var(--border)}
+.btn{padding:10px 20px;border-radius:10px;font-weight:700;border:none;cursor:pointer;font-family:inherit;font-size:.9rem}
+.btn.primary{background:var(--primary);color:#fff}
+.btn.primary:hover{background:var(--primary-dark)}
+.btn.sec{background:var(--bg2);color:var(--primary);border:2px solid var(--border)}
+
+/* Toast */
+.toast{position:fixed;top:66px;right:16px;z-index:9999;padding:12px 20px;border-radius:10px;color:#fff;font-weight:700;font-size:.85rem;box-shadow:0 4px 20px rgba(0,0,0,.2);animation:slideIn .3s}
+.toast.success{background:var(--green)}.toast.error{background:var(--red)}.toast.info{background:var(--primary)}
+@keyframes slideIn{from{transform:translateX(100px);opacity:0}to{transform:translateX(0);opacity:1}}
+
+@media(max-width:600px){.stats{grid-template-columns:1fr 1fr}.wrap{padding:66px 12px 30px}}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="login" id="loginScreen">
+  <div class="login-box">
+    <span class="icon">🔐</span>
+    <h2>Admin Login</h2>
+    <p>Sign in to manage HealTunes chapters & upload songs</p>
+    <form onsubmit="handleLogin(event)">
+      <input type="email" id="emailInput" value="emadh5156@gmail.com" required placeholder="Email">
+      <input type="password" id="pwInput" placeholder="••••••" maxlength="30" autofocus required>
+      <button type="submit" id="loginBtn">🔓 Sign In</button>
+      <div class="login-err" id="loginErr"></div>
+    </form>
+    <a href="/" class="login-back">← Back to Home</a>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="dash" id="dashPanel">
+  <nav class="nav">
+    <span class="logo">🩺 HealTunes Admin</span>
+    <div class="nav-r">
+      <a href="/" class="home">🏠 View Site</a>
+      <button class="logout" onclick="logout()">🚪 Logout</button>
+    </div>
+  </nav>
+  <div class="wrap">
+    <!-- Stats -->
+    <div class="stats">
+      <div class="stat"><span class="n" id="sCh">0</span><span class="l">Chapters</span></div>
+      <div class="stat"><span class="n" id="sSo">0</span><span class="l">Songs</span></div>
+      <div class="stat"><span class="n" id="sFilled">0</span><span class="l">With Songs</span></div>
+      <div class="stat"><span class="n" id="sEmpty">0</span><span class="l">Empty</span></div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab active" data-t="chapters">📚 Chapters</button>
+      <button class="tab" data-t="upload">🎵 Upload Song</button>
+      <button class="tab" data-t="settings">⚙️ Settings</button>
+    </div>
+
+    <!-- Chapters -->
+    <div class="panel active" id="p-chapters">
+      <div class="card">
+        <h3>➕ Add Chapter</h3>
+        <form onsubmit="addChapter(event)" style="display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end">
+          <div class="fr" style="flex:1;min-width:150px;margin:0"><label>Name *</label><input type="text" id="chName" required placeholder="Chapter name"></div>
+          <div class="fr" style="width:80px;margin:0"><label>Icon</label><input type="text" id="chIcon" required placeholder="📚" maxlength="4"></div>
+          <button type="submit" class="bs green" style="padding:10px 16px">Add</button>
+        </form>
+      </div>
+      <div class="ch-list" id="chList"><p style="text-align:center;color:var(--text2);padding:30px">Loading...</p></div>
+    </div>
+
+    <!-- Upload Song -->
+    <div class="panel" id="p-upload">
+      <div class="card">
+        <h3>🎵 Upload Song</h3>
+        <form onsubmit="uploadSong(event)">
+          <div class="fr"><label>Chapter *</label><select id="songCh" required><option value="">Select...</option></select></div>
+          <div class="fr"><label>Title *</label><input type="text" id="songTitle" required placeholder="Song title"></div>
+          <div class="fr">
+            <label>🎵 Audio File *</label>
+            <div class="file-wrap">
+              <input type="file" id="songFile" accept="audio/*" required onchange="document.getElementById('fileLbl').textContent='✅ '+this.files[0].name">
+              <div class="file-label" id="fileLbl">📎 Click to select audio file (MP3, WAV, etc.)</div>
+            </div>
+          </div>
+          <div class="fr">
+            <label>🖼️ Cover Image (optional)</label>
+            <div class="file-wrap">
+              <input type="file" id="songImg" accept="image/*" onchange="handleImgPreview(this)">
+              <div class="file-label" id="imgLbl">🖼️ Click to select cover image</div>
+            </div>
+            <div id="imgPreview" style="display:none;margin-top:8px"><img id="imgThumb" style="max-width:100px;border-radius:8px"></div>
+          </div>
+          <div class="fr"><label>Duration</label><input type="text" id="songDur" placeholder="e.g. 3:45"></div>
+          <div class="up-bar" id="upBar">
+            <span id="upStatus">Uploading...</span>
+            <div class="bar"><div class="fill" id="upFill"></div></div>
+          </div>
+          <button type="submit" class="btn primary" style="margin-top:8px" id="upBtn">📤 Upload Song</button>
+        </form>
+      </div>
+      <!-- URL fallback -->
+      <div class="card">
+        <h3>🔗 Or Add by URL</h3>
+        <form onsubmit="addByUrl(event)">
+          <div class="fr"><label>Chapter *</label><select id="urlCh" required><option value="">Select...</option></select></div>
+          <div class="fr"><label>Title *</label><input type="text" id="urlTitle" required placeholder="Song title"></div>
+          <div class="fr"><label>Audio URL *</label><input type="url" id="urlAudio" required placeholder="https://...mp3"><span class="hint">Direct link to MP3 (Google Drive, Dropbox, CDN)</span></div>
+          <div class="fr"><label>🖼️ Cover Image URL</label><input type="url" id="urlImg" placeholder="https://...jpg"></div>
+          <div class="fr"><label>Duration</label><input type="text" id="urlDur" placeholder="e.g. 3:45"></div>
+          <button type="submit" class="btn sec" style="margin-top:8px">✅ Add Song</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Settings -->
+    <div class="panel" id="p-settings">
+      <div class="card">
+        <h3>🔑 GitHub Token</h3>
+        <div class="fr"><label>Token</label><input type="password" id="ghToken" placeholder="ghp_xxxxxxxxxxxx"></div>
+        <button class="bs green" style="padding:8px 14px;margin-top:4px" onclick="saveToken()">💾 Save Token</button>
+        <p class="hint" style="margin-top:8px">
+          <a href="https://github.com/settings/tokens/new" target="_blank" style="color:var(--primary)">Create token</a> — صلاحية <strong>repo</strong> مطلوبة
+        </p>
+      </div>
+      <div class="card">
+        <h3>📤 Export Data</h3>
+        <p style="color:var(--text2);font-size:.85rem;margin-bottom:10px">Download all chapters & songs as JSON backup.</p>
+        <button class="btn primary" onclick="exportData()">💾 Export JSON</button>
+      </div>
+      <div class="card">
+        <h3>🗑️ Reset Data</h3>
+        <p style="color:var(--text2);font-size:.85rem;margin-bottom:10px">Delete everything and start fresh.</p>
+        <button class="bs red" style="padding:8px 16px;font-size:.85rem" onclick="resetData()">⚠️ Reset All</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="config.js"></script>
+<script>
+let chapters = [];
+
+// ===== INIT =====
+document.addEventListener('DOMContentLoaded', async () => {
+  if (DB.isLoggedIn()) showDash();
+
+  // Tab switching
+  document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(x => x.classList.remove('active'));
+    t.classList.add('active');
+    document.getElementById('p-' + t.dataset.t).classList.add('active');
+  }));
+
+  // Load saved token
+  const gt = localStorage.getItem('ht_gh_token');
+  if (gt) document.getElementById('ghToken').value = gt;
+});
+
+// ===== LOGIN =====
+async function handleLogin(e) {
+  e.preventDefault();
+  const email = document.getElementById('emailInput').value.trim();
+  const pw = document.getElementById('pwInput').value;
+  const btn = document.getElementById('loginBtn');
+  const err = document.getElementById('loginErr');
+
+  btn.disabled = true; btn.textContent = 'Checking...'; err.textContent = '';
+
+  await DB.init();
+  if (DB.login(email, pw)) {
+    DB.setSession(email);
+    showDash();
+  } else {
+    err.textContent = '❌ Invalid email or password!';
+    btn.disabled = false; btn.textContent = '🔓 Sign In';
+    document.getElementById('pwInput').value = '';
+  }
+}
+
+function logout() { DB.logout(); location.reload(); }
+
+async function showDash() {
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('dashPanel').classList.add('show');
+  await DB.init();
+  chapters = DB.getChapters();
+  render();
+}
+
+// ===== RENDER =====
+function render() {
+  const songs = chapters.reduce((s, c) => s + (c.songs || []).length, 0);
+  const filled = chapters.filter(c => (c.songs || []).length > 0).length;
+  document.getElementById('sCh').textContent = chapters.length;
+  document.getElementById('sSo').textContent = songs;
+  document.getElementById('sFilled').textContent = filled;
+  document.getElementById('sEmpty').textContent = chapters.length - filled;
+  renderChapters();
+  populateSel();
+}
+
+function renderChapters() {
+  const el = document.getElementById('chList');
+  if (!chapters.length) { el.innerHTML = '<p style="text-align:center;color:var(--text2);padding:24px">No chapters. Add one above! 👆</p>'; return; }
+  el.innerHTML = chapters.map(c => `
+    <div class="ch-item">
+      <div class="ch-head">
+        <span class="icon">${c.icon}</span>
+        <div class="info">
+          <div class="name">${c.name}</div>
+          <div class="count">${(c.songs || []).length} song${(c.songs || []).length !== 1 ? 's' : ''}</div>
+          ${(c.songs || []).length ? `<div class="song-list">${c.songs.map((s, i) => `
+            <div class="song-row">
+              ${s.image ? `<img src="${s.image}" onerror="this.outerHTML='🎵'">` : '🎵'}
+              <span class="title">${s.title}</span>
+              <span class="url">${s.audio || ''}</span>
+              <button class="bs ghost" onclick="new Audio('${s.audio}').play().catch(()=>toast('Cannot play','error'))">▶</button>
+              <button class="bs red" onclick="delSong(${c.id}, ${i})">🗑</button>
+            </div>`).join('')}</div>` : ''}
+        </div>
+        <div class="acts">
+          <button class="bs blue" onclick="editCh(${c.id})">✏️</button>
+          <button class="bs red" onclick="delCh(${c.id})">🗑️</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function populateSel() {
+  const opts = '<option value="">Select chapter...</option>' + chapters.map(c => `<option value="${c.id}">${c.icon} ${c.name}</option>`).join('');
+  document.getElementById('songCh').innerHTML = opts;
+  document.getElementById('urlCh').innerHTML = opts;
+}
+
+// ===== CHAPTERS =====
+async function addChapter(e) {
+  e.preventDefault();
+  const name = document.getElementById('chName').value.trim();
+  const icon = document.getElementById('chIcon').value.trim();
+  if (!name || !icon) return;
+  await SYNC.addChapter(name, icon);
+  document.getElementById('chName').value = '';
+  document.getElementById('chIcon').value = '';
+  toast('Chapter added!', 'success');
+  chapters = DB.getChapters(); render();
+}
+
+async function editCh(id) {
+  const ch = chapters.find(c => c.id === id); if (!ch) return;
+  const n = prompt('Name:', ch.name); if (!n) return;
+  const i = prompt('Icon:', ch.icon); if (!i) return;
+  await SYNC.updateChapter(id, { name: n, icon: i });
+  toast('Updated!', 'success');
+  chapters = DB.getChapters(); render();
+}
+
+async function delCh(id) {
+  if (!confirm('Delete this chapter and all its songs?')) return;
+  await SYNC.removeChapter(id);
+  toast('Deleted!', 'info');
+  chapters = DB.getChapters(); render();
+}
+
+// ===== FILE UPLOAD =====
+async function uploadSong(e) {
+  e.preventDefault();
+  const chId = parseInt(document.getElementById('songCh').value);
+  const title = document.getElementById('songTitle').value.trim();
+  const file = document.getElementById('songFile').files[0];
+  const imgFile = document.getElementById('songImg').files[0];
+  if (!chId || !title || !file) { toast('Fill all required fields!', 'error'); return; }
+
+  const btn = document.getElementById('upBtn');
+  const bar = document.getElementById('upBar');
+  const fill = document.getElementById('upFill');
+  const status = document.getElementById('upStatus');
+
+  btn.disabled = true; btn.textContent = '⏳ Uploading...';
+  bar.style.display = 'block'; fill.style.width = '0%';
+  status.textContent = 'Uploading audio...';
+
+  try {
+    // Upload audio to Cloudinary
+    const result = await SYNC.uploadAudio(file, pct => {
+      fill.style.width = pct + '%';
+      status.textContent = `Uploading audio... ${pct}%`;
+    });
+
+    // Upload cover image if provided
+    let imageUrl = '';
+    if (imgFile) {
+      fill.style.width = '0%';
+      status.textContent = 'Uploading image...';
+      const imgResult = await SYNC.uploadAudio(imgFile, pct => {
+        fill.style.width = pct + '%';
+        status.textContent = `Uploading image... ${pct}%`;
+      });
+      imageUrl = imgResult.url;
+    }
+
+    fill.style.width = '100%'; status.textContent = 'Saving...';
+    await SYNC.addSong(chId, title, result.url, result.publicId, imageUrl);
+
+    status.textContent = '✅ Done!';
+    toast('Song uploaded!', 'success');
+
+    // Reset form
+    e.target.reset();
+    document.getElementById('fileLbl').textContent = '📎 Click to select audio file (MP3, WAV, etc.)';
+    document.getElementById('imgLbl').textContent = '🖼️ Click to select cover image';
+    document.getElementById('imgPreview').style.display = 'none';
+    chapters = DB.getChapters(); render();
+    setTimeout(() => { bar.style.display = 'none'; }, 2000);
+  } catch (err) {
+    status.textContent = '❌ ' + err.message;
+    toast('Upload failed: ' + err.message, 'error');
+  }
+  btn.disabled = false; btn.textContent = '📤 Upload Song';
+}
+
+// ===== URL FALLBACK =====
+async function addByUrl(e) {
+  e.preventDefault();
+  const chId = parseInt(document.getElementById('urlCh').value);
+  const title = document.getElementById('urlTitle').value.trim();
+  const audio = document.getElementById('urlAudio').value.trim();
+  const image = document.getElementById('urlImg').value.trim();
+  if (!chId || !title || !audio) { toast('Fill required fields!', 'error'); return; }
+  await SYNC.addSong(chId, title, audio, '', image);
+  toast('Song added!', 'success');
+  e.target.reset();
+  chapters = DB.getChapters(); render();
+}
+
+function handleImgPreview(input) {
+  if (input.files && input.files[0]) {
+    const reader = new FileReader();
+    reader.onload = e => {
+      document.getElementById('imgThumb').src = e.target.result;
+      document.getElementById('imgPreview').style.display = 'block';
+      document.getElementById('imgLbl').textContent = '✅ ' + input.files[0].name;
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+async function delSong(chId, idx) {
+  if (!confirm('Delete this song?')) return;
+  const ch = chapters.find(c => c.id === chId);
+  if (ch && ch.songs) {
+    const songId = ch.songs[idx]?.id;
+    if (songId) await SYNC.removeSong(chId, songId);
+  }
+  toast('Deleted!', 'info');
+  chapters = DB.getChapters(); render();
+}
+
+// ===== SETTINGS =====
+function saveToken() {
+  const t = document.getElementById('ghToken').value.trim();
+  if (!t) { toast('Enter a token!', 'error'); return; }
+  GH.setToken(t);
+  toast('✅ Token saved!', 'success');
+}
+
+function exportData() {
+  const blob = new Blob([JSON.stringify(chapters, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = 'healtunes-data-' + new Date().toISOString().slice(0, 10) + '.json';
+  a.click();
+  toast('💾 Exported!', 'success');
+}
+
+async function resetData() {
+  if (!confirm('⚠️ Delete ALL data?')) return;
+  if (!confirm('Last chance!')) return;
+  DB._cache = JSON.parse(JSON.stringify(DEFAULT_DATA));
+  await DB.save();
+  toast('Reset done! Reloading...', 'info');
+  setTimeout(() => location.reload(), 1500);
+}
+
+// ===== TOAST =====
+function toast(msg, type = 'info') {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.className = 'toast ' + type;
+  setTimeout(() => t.classList.add('show'), 10);
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+</script>
+</body>
+</html>
