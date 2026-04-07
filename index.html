@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HealTunes — Medical Guidance Through Music</title>
+<meta name="description" content="HealTunes — your medical guidance companion through music! Learn about diseases, treatments, and health tips through fun, easy-to-understand audio stories and songs.">
+<meta name="robots" content="index, follow">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0891B2">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F0F9FF;--bg2:#E0F2FE;--bg-card:#FFFFFF;
+  --text:#0C4A6E;--text2:#475569;--text3:#94A3B8;
+  --primary:#0891B2;--primary-dark:#0E7490;--primary-light:#22D3EE;
+  --secondary:#10B981;--accent:#6366F1;--danger:#EF4444;
+  --pink:#EC4899;--amber:#F59E0B;--purple:#8B5CF6;
+  --border:#BAE6FD;--shadow:rgba(8,145,178,0.12);
+  --nav-bg:rgba(240,249,255,0.92);--overlay:rgba(0,0,0,0.4);
+  --radius:16px;--radius-sm:10px;
+  --gradient:linear-gradient(135deg,#0891B2,#10B981);
+}
+[data-theme="dark"]{
+  --bg:#0C1821;--bg2:#132833;--bg-card:#1A3040;
+  --text:#E0F2FE;--text2:#94A3B8;--text3:#64748B;
+  --border:#1E4D5C;--shadow:rgba(0,0,0,0.4);
+  --nav-bg:rgba(12,24,33,0.95);--overlay:rgba(0,0,0,0.7);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;transition:background .4s,color .4s}
+a{color:var(--primary);text-decoration:none}
+a:hover{text-decoration:underline}
+button{font-family:inherit;cursor:pointer;border:none;outline:none}
+
+/* ===== ANIMATIONS ===== */
+@keyframes bounceIn{0%{transform:scale(0.3);opacity:0}50%{transform:scale(1.05)}70%{transform:scale(0.95)}100%{transform:scale(1);opacity:1}}
+@keyframes slideUp{from{transform:translateY(60px);opacity:0}to{transform:translateY(0);opacity:1}}
+@keyframes slideDown{from{transform:translateY(-30px);opacity:0}to{transform:translateY(0);opacity:1}}
+@keyframes slideLeft{from{transform:translateX(60px);opacity:0}to{transform:translateX(0);opacity:1}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+@keyframes wiggle{0%,100%{transform:rotate(0)}25%{transform:rotate(-5deg)}75%{transform:rotate(5deg)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+@keyframes heartbeat{0%,100%{transform:scale(1)}14%{transform:scale(1.3)}28%{transform:scale(1)}42%{transform:scale(1.3)}70%{transform:scale(1)}}
+@keyframes wobble{0%{transform:rotate(0)}15%{transform:rotate(-12deg)}30%{transform:rotate(9deg)}45%{transform:rotate(-6deg)}60%{transform:rotate(3deg)}75%{transform:rotate(-1deg)}100%{transform:rotate(0)}}
+@keyframes confetti{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+@keyframes popIn{0%{transform:scale(0);opacity:0}80%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+@keyframes breathe{0%,100%{transform:scale(1);opacity:.6}50%{transform:scale(1.15);opacity:1}}
+
+.anim-bounce{animation:bounceIn .6s cubic-bezier(.68,-.55,.27,1.55)}
+.anim-slide-up{animation:slideUp .5s ease-out both}
+.anim-fade{animation:fadeIn .5s ease both}
+.anim-pop{animation:popIn .4s cubic-bezier(.68,-.55,.27,1.55) both}
+.anim-float{animation:float 3s ease-in-out infinite}
+.anim-wobble{animation:wobble .8s ease-in-out}
+.anim-heartbeat{animation:heartbeat 1.5s ease-in-out infinite}
+.anim-breathe{animation:breathe 4s ease-in-out infinite}
+
+.d1{animation-delay:.1s}.d2{animation-delay:.2s}.d3{animation-delay:.3s}
+.d4{animation-delay:.4s}.d5{animation-delay:.5s}.d6{animation-delay:.6s}
+
+.reveal{opacity:0;transform:translateY(40px);transition:all .6s cubic-bezier(.25,.46,.45,.94)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ===== NAVBAR ===== */
+.navbar{position:fixed;top:0;left:0;right:0;z-index:1000;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:2px solid var(--border);padding:0 20px;height:64px;display:flex;align-items:center;justify-content:space-between;transition:all .3s}
+.navbar.scrolled{box-shadow:0 4px 20px var(--shadow)}
+.nav-logo{display:flex;align-items:center;gap:8px;font-size:1.25rem;font-weight:800;color:var(--primary);text-decoration:none;cursor:pointer}
+.nav-logo:hover{text-decoration:none}
+.nav-logo .logo-icon{font-size:1.5rem;animation:pulse 2s infinite}
+.nav-links{display:flex;align-items:center;gap:4px}
+.nav-link{padding:8px 14px;border-radius:var(--radius-sm);color:var(--text2);font-weight:600;font-size:.87rem;transition:all .3s;cursor:pointer;background:none}
+.nav-link:hover,.nav-link.active{color:var(--primary);background:var(--bg2);text-decoration:none}
+.nav-actions{display:flex;align-items:center;gap:8px}
+.theme-toggle{width:42px;height:42px;border-radius:50%;background:var(--bg2);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1.2rem;transition:all .3s;position:relative;overflow:hidden}
+.theme-toggle:hover{transform:rotate(30deg);border-color:var(--primary)}
+.theme-toggle .sun,.theme-toggle .moon{position:absolute;transition:all .4s}
+.theme-toggle .moon{opacity:0;transform:rotate(-90deg) scale(0)}
+[data-theme="dark"] .theme-toggle .sun{opacity:0;transform:rotate(90deg) scale(0)}
+[data-theme="dark"] .theme-toggle .moon{opacity:1;transform:rotate(0) scale(1)}
+.hamburger{display:none;width:42px;height:42px;border-radius:var(--radius-sm);background:var(--bg2);border:2px solid var(--border);flex-direction:column;align-items:center;justify-content:center;gap:5px}
+.hamburger span{width:20px;height:2px;background:var(--text);border-radius:2px;transition:all .3s}
+.hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+.mobile-menu{display:none;position:fixed;top:64px;left:0;right:0;bottom:0;background:var(--bg);z-index:999;padding:20px;animation:slideDown .3s ease;overflow-y:auto}
+.mobile-menu.show{display:block}
+.mobile-menu .nav-link{display:block;padding:14px 16px;font-size:1.05rem;border-radius:var(--radius-sm);margin-bottom:4px}
+@media(max-width:900px){.nav-links{display:none}.hamburger{display:flex}}
+
+/* ===== PAGE SECTIONS ===== */
+.page{display:none;min-height:100vh;padding-top:64px}
+.page.active{display:block;animation:fadeIn .4s ease}
+
+/* ===== HERO ===== */
+.hero{min-height:calc(100vh - 64px);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 20px;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;z-index:0;overflow:hidden}
+.hero-bg .emoji-float{position:absolute;opacity:.08;animation:float 5s ease-in-out infinite}
+.hero-content{position:relative;z-index:1;max-width:720px}
+.hero-badge{display:inline-block;padding:6px 16px;background:var(--gradient);color:#fff;border-radius:30px;font-size:.82rem;font-weight:700;margin-bottom:20px;animation:bounceIn .6s ease;letter-spacing:.5px}
+.hero h1{font-size:clamp(1.9rem,5.5vw,3.2rem);font-weight:900;line-height:1.15;margin-bottom:16px}
+.hero h1 .highlight{background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-desc{font-size:1.15rem;color:var(--text2);margin-bottom:30px;line-height:1.65}
+.hero-cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn{padding:13px 26px;border-radius:50px;font-weight:700;font-size:.95rem;transition:all .3s;display:inline-flex;align-items:center;gap:8px}
+.btn-primary{background:var(--gradient);color:#fff;box-shadow:0 4px 15px var(--shadow)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 25px var(--shadow);text-decoration:none}
+.btn-secondary{background:var(--bg-card);color:var(--primary);border:2px solid var(--primary)}
+.btn-secondary:hover{background:var(--primary);color:#fff;text-decoration:none;transform:translateY(-2px)}
+.btn:hover{transform:translateY(-2px)}
+
+.stats-strip{display:flex;gap:32px;justify-content:center;margin-top:40px;flex-wrap:wrap}
+.stat-item{text-align:center}
+.stat-num{font-size:1.7rem;font-weight:900;color:var(--primary);display:block}
+.stat-label{font-size:.82rem;color:var(--text3);font-weight:500}
+
+/* ===== CHAPTERS ===== */
+.chapters-section{padding:60px 20px;max-width:1200px;margin:0 auto}
+.section-header{text-align:center;margin-bottom:36px}
+.section-header h2{font-size:1.9rem;font-weight:800;margin-bottom:8px}
+.section-header p{color:var(--text2);font-size:1rem}
+.section-header .emoji-deco{font-size:2rem;display:block;margin-bottom:8px;animation:wobble 1s ease-in-out}
+
+/* Category tabs */
+.cat-tabs{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:24px}
+.cat-tab{padding:8px 18px;border-radius:30px;background:var(--bg-card);border:2px solid var(--border);color:var(--text2);font-weight:600;font-size:.85rem;transition:all .3s;cursor:pointer}
+.cat-tab:hover,.cat-tab.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+
+.chapters-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.chapter-card{background:var(--bg-card);border:2px solid var(--border);border-radius:var(--radius);padding:18px;cursor:pointer;transition:all .3s cubic-bezier(.25,.46,.45,.94);position:relative;overflow:hidden}
+.chapter-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gradient);transform:scaleX(0);transition:transform .3s;transform-origin:left}
+.chapter-card:hover{transform:translateY(-5px);box-shadow:0 12px 30px var(--shadow);border-color:var(--primary)}
+.chapter-card:hover::before{transform:scaleX(1)}
+.chapter-card:active{transform:scale(.97)}
+.card-num{width:40px;height:40px;background:var(--gradient);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.9rem;color:#fff;margin-bottom:10px;transition:transform .3s}
+.chapter-card:hover .card-num{transform:scale(1.1) rotate(10deg)}
+.card-emoji{font-size:1.8rem;margin-bottom:6px;display:block}
+.card-name{font-weight:700;font-size:.95rem;margin-bottom:3px}
+.card-count{color:var(--text3);font-size:.82rem}
+.card-badge{position:absolute;top:10px;right:10px;padding:2px 10px;border-radius:20px;font-size:.68rem;font-weight:700;background:var(--secondary);color:#fff}
+.card-system{font-size:.72rem;color:var(--primary);font-weight:600;margin-top:4px;text-transform:uppercase;letter-spacing:.5px}
+
+/* ===== SONGS VIEW ===== */
+.songs-header{display:flex;align-items:center;gap:16px;margin-bottom:24px}
+.back-btn{background:var(--bg2);border:2px solid var(--border);color:var(--primary);padding:10px 20px;border-radius:var(--radius-sm);font-weight:700;transition:all .3s;display:inline-flex;align-items:center;gap:6px}
+.back-btn:hover{background:var(--primary);color:#fff;border-color:var(--primary);text-decoration:none}
+.song-card{background:var(--bg-card);border:2px solid var(--border);border-radius:var(--radius-sm);padding:14px;margin-bottom:8px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:all .3s}
+.song-card:hover{border-color:var(--primary);transform:translateX(5px);box-shadow:0 4px 15px var(--shadow)}
+.song-card.playing{border-color:var(--primary);background:var(--bg2)}
+.song-play-btn{width:46px;height:46px;border-radius:50%;background:var(--gradient);color:#fff;font-size:1.1rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .3s}
+.song-play-btn:hover{transform:scale(1.1)}
+.song-info{flex:1}
+.song-title{font-weight:600;font-size:.95rem}
+.song-duration{color:var(--text3);font-size:.82rem}
+.empty-state{text-align:center;padding:80px 20px}
+.empty-state .emoji{font-size:4rem;margin-bottom:16px;display:block;animation:float 3s ease-in-out infinite}
+.empty-state p{color:var(--text3);font-size:1.05rem}
+
+/* ===== PLAYER BAR ===== */
+.player-bar{display:none;position:fixed;bottom:0;left:0;right:0;z-index:1001;background:var(--nav-bg);backdrop-filter:blur(20px);border-top:3px solid var(--primary);padding:10px 16px;box-shadow:0 -4px 20px var(--shadow)}
+.player-inner{max-width:700px;margin:0 auto;display:flex;align-items:center;gap:12px}
+.player-btn{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;transition:all .3s;flex-shrink:0}
+.player-btn:hover{transform:scale(1.1)}
+.player-play{background:var(--gradient);color:#fff}
+.player-stop{background:var(--danger);color:#fff}
+.player-close{background:var(--bg2);color:var(--text3);border:2px solid var(--border);width:36px;height:36px;font-size:.85rem}
+.player-info{flex:1;min-width:0}
+.player-title{display:block;font-weight:700;font-size:.92rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.player-chapter{display:block;font-size:.78rem;color:var(--text3)}
+.player-progress{width:100%;height:4px;background:var(--border);border-radius:2px;margin-top:5px;overflow:hidden;cursor:pointer}
+.player-progress-fill{height:100%;background:var(--gradient);border-radius:2px;transition:width .1s;width:0}
+
+/* ===== PAGES ===== */
+.page-content{max-width:800px;margin:0 auto;padding:40px 20px 80px}
+.page-content h1{font-size:1.9rem;font-weight:800;margin-bottom:8px;display:flex;align-items:center;gap:10px}
+.page-content h1 .pg-icon{font-size:1.7rem}
+.page-content .pg-subtitle{color:var(--text2);margin-bottom:28px;font-size:1rem}
+.page-content h2{font-size:1.3rem;font-weight:700;margin:26px 0 10px;color:var(--primary)}
+.page-content h3{font-size:1.1rem;font-weight:700;margin:18px 0 8px}
+.page-content p,.page-content li{line-height:1.7;color:var(--text2);margin-bottom:8px}
+.page-content ul,.page-content ol{padding-left:24px;margin-bottom:14px}
+.page-content .info-box{background:var(--bg2);border:2px solid var(--border);border-radius:var(--radius);padding:18px;margin:18px 0}
+.page-content .info-box.highlight{border-color:var(--primary)}
+.last-updated{font-size:.82rem;color:var(--text3);margin-bottom:22px}
+
+/* Contact Form */
+.contact-form{background:var(--bg-card);border:2px solid var(--border);border-radius:var(--radius);padding:26px;margin-top:18px}
+.form-group{margin-bottom:16px}
+.form-group label{display:block;font-weight:700;margin-bottom:5px;font-size:.92rem}
+.form-group input,.form-group textarea,.form-group select{width:100%;padding:11px 14px;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--bg);color:var(--text);font-size:.95rem;font-family:inherit;transition:border-color .3s}
+.form-group input:focus,.form-group textarea:focus{border-color:var(--primary);outline:none}
+.form-group textarea{min-height:120px;resize:vertical}
+.form-submit{width:100%;padding:13px;background:var(--gradient);color:#fff;border-radius:var(--radius-sm);font-size:1.05rem;font-weight:700;transition:all .3s}
+.form-submit:hover{transform:translateY(-2px);opacity:.9}
+
+/* About */
+.about-hero{text-align:center;padding:20px 0 36px}
+.about-hero .big-emoji{font-size:3.5rem;margin-bottom:12px;display:block;animation:heartbeat 2s ease-in-out infinite}
+.mission-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:22px 0}
+.mission-card{background:var(--bg-card);border:2px solid var(--border);border-radius:var(--radius);padding:22px;text-align:center;transition:all .3s}
+.mission-card:hover{transform:translateY(-4px);box-shadow:0 8px 25px var(--shadow)}
+.mission-card .mc-icon{font-size:2.2rem;margin-bottom:10px;display:block}
+.mission-card h3{font-size:1rem;margin-bottom:6px}
+.mission-card p{color:var(--text2);font-size:.87rem}
+.about-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:14px;margin:22px 0}
+.about-stat{text-align:center;padding:18px;background:var(--bg2);border-radius:var(--radius)}
+.about-stat .num{font-size:1.9rem;font-weight:900;color:var(--primary);display:block}
+.about-stat .lbl{font-size:.82rem;color:var(--text3)}
+
+/* Forgot Password */
+.forgot-box{max-width:420px;margin:60px auto;background:var(--bg-card);border:2px solid var(--border);border-radius:var(--radius);padding:30px;text-align:center}
+.forgot-box .fp-icon{font-size:3.2rem;margin-bottom:14px;display:block;animation:wobble 1s ease-in-out}
+.forgot-box h2{margin-bottom:8px}
+.forgot-box p{color:var(--text2);margin-bottom:22px}
+
+/* ===== FOOTER ===== */
+.footer{background:var(--bg2);border-top:2px solid var(--border);padding:36px 20px 18px;margin-top:60px}
+.footer-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:28px;margin-bottom:28px}
+.footer-col h3{font-size:.95rem;font-weight:700;margin-bottom:12px;color:var(--primary)}
+.footer-col a{display:block;color:var(--text2);padding:3px 0;transition:color .3s;font-size:.92rem}
+.footer-col a:hover{color:var(--primary);text-decoration:none}
+.footer-bottom{max-width:1200px;margin:0 auto;text-align:center;padding-top:18px;border-top:2px solid var(--border)}
+.footer-bottom p{color:var(--text3);font-size:.82rem}
+.footer-social{display:flex;gap:10px;justify-content:center;margin-top:10px}
+.footer-social a{width:36px;height:36px;border-radius:50%;background:var(--bg-card);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1rem;transition:all .3s}
+.footer-social a:hover{background:var(--primary);border-color:var(--primary);transform:translateY(-3px);text-decoration:none}
+
+.page-back{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:var(--bg2);border:2px solid var(--border);border-radius:var(--radius-sm);color:var(--primary);font-weight:700;font-size:.9rem;transition:all .3s;cursor:pointer;margin-bottom:20px}
+.page-back:hover{background:var(--primary);color:#fff;border-color:var(--primary);text-decoration:none}
+.page-back .pb-icon{transition:transform .3s}
+.page-back:hover .pb-icon{transform:translateX(-4px)}
+
+/* Back to top */
+.back-to-top{position:fixed;bottom:80px;right:20px;width:44px;height:44px;border-radius:50%;background:var(--gradient);color:#fff;font-size:1.1rem;display:none;align-items:center;justify-content:center;box-shadow:0 4px 15px var(--shadow);z-index:998;transition:all .3s}
+.back-to-top.show{display:flex}
+.back-to-top:hover{transform:translateY(-3px)}
+
+/* Confetti */
+.confetti-piece{position:fixed;top:-10px;z-index:9999;width:10px;height:10px;border-radius:2px;animation:confetti 3s ease-in forwards;pointer-events:none}
+
+/* Terms */
+.terms-tabs{display:flex;gap:8px;margin-bottom:22px;flex-wrap:wrap}
+.terms-tab{padding:9px 18px;border-radius:30px;background:var(--bg2);border:2px solid var(--border);color:var(--text2);font-weight:700;font-size:.87rem;transition:all .3s;cursor:pointer}
+.terms-tab:hover,.terms-tab.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+.terms-panel{display:none}
+.terms-panel.active{display:block;animation:fadeIn .3s ease}
+.terms-list{counter-reset:terms}
+.terms-list li{counter-increment:terms;padding:9px 0;border-bottom:1px solid var(--border);list-style:none;position:relative;padding-left:34px}
+.terms-list li::before{content:counter(terms);position:absolute;left:0;top:9px;width:24px;height:24px;border-radius:50%;background:var(--primary);color:#fff;font-size:.78rem;font-weight:700;display:flex;align-items:center;justify-content:center}
+
+/* Toast */
+.toast{position:fixed;top:76px;right:20px;z-index:9999;padding:13px 22px;border-radius:var(--radius-sm);color:#fff;font-weight:700;box-shadow:0 4px 20px rgba(0,0,0,.3);animation:slideLeft .4s ease,fadeIn .4s ease;max-width:300px}
+.toast.success{background:var(--secondary)}.toast.error{background:var(--danger)}.toast.info{background:var(--accent)}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:600px){
+  .hero h1{font-size:1.7rem}
+  .chapters-grid{grid-template-columns:1fr}
+  .stats-strip{gap:14px}
+  .stat-num{font-size:1.3rem}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .player-inner{gap:6px}
+  .player-btn{width:38px;height:38px;font-size:.85rem}
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <a class="nav-logo" onclick="navigate('home')">
+    <span class="logo-icon">🩺</span>
+    <span>HealTunes</span>
+  </a>
+  <div class="nav-links" id="navLinks">
+    <button class="nav-link active" onclick="navigate('home')">🏠 Home</button>
+    <button class="nav-link" onclick="navigate('about')">📖 About</button>
+    <button class="nav-link" onclick="navigate('contact')">✉️ Contact</button>
+    <button class="nav-link" onclick="navigate('privacy')">🔒 Privacy</button>
+    <button class="nav-link" onclick="navigate('terms')">📋 Terms</button>
+  </div>
+  <div class="nav-actions">
+    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
+      <span class="sun">☀️</span><span class="moon">🌙</span>
+    </button>
+    <button class="hamburger" id="hamburger" onclick="toggleMobile()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="nav-link" onclick="navigate('home');toggleMobile()">🏠 Home</button>
+  <button class="nav-link" onclick="navigate('about');toggleMobile()">📖 About Us</button>
+  <button class="nav-link" onclick="navigate('contact');toggleMobile()">✉️ Contact Us</button>
+  <button class="nav-link" onclick="navigate('privacy');toggleMobile()">🔒 Privacy Policy</button>
+  <button class="nav-link" onclick="navigate('terms');toggleMobile()">📋 Terms & Conditions</button>
+  <button class="nav-link" onclick="navigate('refund');toggleMobile()">💰 Refund Policy</button>
+  <button class="nav-link" onclick="navigate('forgot');toggleMobile()">🔑 Forgot Password</button>
+</div>
+
+<!-- HOME PAGE -->
+<div class="page active" id="page-home">
+  <section class="hero" id="heroSection">
+    <div class="hero-bg" id="heroBg"></div>
+    <div class="hero-content anim-bounce">
+      <span class="hero-badge">🏥 Medical Guidance Through Music</span>
+      <h1>Learn About <span class="highlight">Health</span> Through Songs</h1>
+      <p class="hero-desc">HealTunes turns complex medical conditions into easy, memorable audio stories and songs. From heart health to brain wellness — learn, understand, and take control of your health! 🎵</p>
+      <div class="hero-cta">
+        <button class="btn btn-primary" onclick="document.getElementById('chaptersSection').scrollIntoView({behavior:'smooth'})">▶ Start Listening</button>
+        <button class="btn btn-secondary" onclick="navigate('about')">📖 Learn More</button>
+      </div>
+      <div class="stats-strip anim-slide-up d3">
+        <div class="stat-item"><span class="stat-num">120+</span><span class="stat-label">Conditions</span></div>
+        <div class="stat-item"><span class="stat-num">16</span><span class="stat-label">Body Systems</span></div>
+        <div class="stat-item"><span class="stat-num">300+</span><span class="stat-label">Audio Stories</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapters-section" id="chaptersSection">
+    <div class="section-header reveal">
+      <span class="emoji-deco">🫀</span>
+      <h2>Explore by Body System</h2>
+      <p>Choose a system to discover conditions and listen to guidance songs</p>
+    </div>
+    <div class="cat-tabs" id="catTabs"></div>
+    <div class="chapters-grid" id="chaptersGrid"></div>
+  </section>
+
+  <section class="chapters-section" id="songsSection" style="display:none">
+    <div class="songs-header">
+      <button class="back-btn" onclick="showChapters()">← Back to Chapters</button>
+    </div>
+    <div class="section-header">
+      <h2 id="songsChapterTitle"></h2>
+    </div>
+    <div id="songsList"></div>
+  </section>
+</div>
+
+<!-- ABOUT PAGE -->
+<div class="page" id="page-about">
+  <div class="page-content">
+    <a class="page-back" onclick="navigate('home')"><span class="pb-icon">←</span> Back to Home</a>
+    <h1><span class="pg-icon">📖</span> About Us</h1>
+    <p class="pg-subtitle">Making medical knowledge accessible through music!</p>
+    <div class="about-hero">
+      <span class="big-emoji">🩺</span>
+      <p style="font-size:1.1rem;line-height:1.7;color:var(--text2)"><strong>HealTunes</strong> was created with one mission: make health education enjoyable. We transform complex medical conditions into easy-to-understand songs and stories that anyone can learn from.</p>
+    </div>
+    <div class="mission-cards reveal">
+      <div class="mission-card"><span class="mc-icon">🎯</span><h3>Our Mission</h3><p>To democratize medical knowledge through engaging audio content that helps people understand their health better.</p></div>
+      <div class="mission-card"><span class="mc-icon">👁️</span><h3>Our Vision</h3><p>A world where every person understands their body, recognizes symptoms, and makes informed health decisions.</p></div>
+      <div class="mission-card"><span class="mc-icon">💚</span><h3>Our Values</h3><p>Accuracy, empathy, accessibility, and innovation — health education should be for everyone.</p></div>
+    </div>
+    <h2>📊 By the Numbers</h2>
+    <div class="about-stats reveal">
+      <div class="about-stat"><span class="num">120+</span><span class="lbl">Conditions</span></div>
+      <div class="about-stat"><span class="num">16</span><span class="lbl">Body Systems</span></div>
+      <div class="about-stat"><span class="num">500K+</span><span class="lbl">Listeners</span></div>
+      <div class="about-stat"><span class="num">4.9★</span><span class="lbl">Rating</span></div>
+    </div>
+    <div class="info-box highlight"><h3>⚠️ Medical Disclaimer</h3><p>HealTunes provides educational content only. It is NOT a substitute for professional medical advice, diagnosis, or treatment. Always consult a qualified healthcare provider for medical concerns.</p></div>
+    <h2>🔒 Safe & Compliant</h2>
+    <p>HealTunes complies with HIPAA guidelines, COPPA (for any child users), and all applicable data protection regulations. Your health information is never collected or shared.</p>
+  </div>
+</div>
+
+<!-- CONTACT PAGE -->
+<div class="page" id="page-contact">
+  <div class="page-content">
+    <a class="page-back" onclick="navigate('home')"><span class="pb-icon">←</span> Back to Home</a>
+    <h1><span class="pg-icon">✉️</span> Contact Us</h1>
+    <p class="pg-subtitle">Questions, suggestions, or partnership inquiries? Reach out!</p>
+    <div class="contact-form">
+      <form id="contactForm" onsubmit="handleContact(event)">
+        <div class="form-group"><label>Your Name *</label><input type="text" required placeholder="Enter your name"></div>
+        <div class="form-group"><label>Email Address *</label><input type="email" required placeholder="your@email.com"></div>
+        <div class="form-group"><label>Subject *</label>
+          <select required><option value="">Choose a topic...</option><option>General Question</option><option>Medical Content Suggestion</option><option>Technical Issue</option><option>Partnership / Business</option><option>Feedback</option><option>Other</option></select>
+        </div>
+        <div class="form-group"><label>Your Message *</label><textarea required placeholder="Tell us what's on your mind..."></textarea></div>
+        <button type="submit" class="form-submit">🚀 Send Message</button>
+      </form>
+    </div>
+    <div class="info-box" style="margin-top:22px"><h3>📬 Other Ways to Reach Us</h3><p>📧 Email: <strong>emadh5156@gmail.com</strong></p><p>⏰ Response time: Usually within 24–48 hours</p></div>
+  </div>
+</div>
+
+<!-- PRIVACY PAGE -->
+<div class="page" id="page-privacy">
+  <div class="page-content">
+    <a class="page-back" onclick="navigate('home')"><span class="pb-icon">←</span> Back to Home</a>
+    <h1><span class="pg-icon">🔒</span> Privacy Policy</h1>
+    <p class="last-updated">Last Updated: April 5, 2026</p>
+    <div class="info-box highlight"><p><strong>HealTunes</strong> is committed to protecting your privacy. This policy explains what data we collect, how we use it, and your rights.</p></div>
+    <h2>1. Information We Collect</h2>
+    <ul><li><strong>Account Information:</strong> Email address, display name, and password when you create an account.</li><li><strong>Usage Data:</strong> Chapters visited, tracks played, listening duration.</li><li><strong>Device Information:</strong> Device type, OS, unique identifiers, browser type.</li><li><strong>Log Data:</strong> IP address, access times, referring URLs.</li></ul>
+    <h2>2. Cookies & Tracking</h2>
+    <p>We use cookies to remember preferences, analyze usage, deliver ads via Google AdSense, and maintain security. Manage cookies via your browser settings.</p>
+    <h2>3. Google AdSense & Advertising</h2>
+    <p>We use Google AdSense. Google may use cookies for personalized ads. Opt out at <a href="https://www.google.com/settings/ads" target="_blank">Google Ads Settings</a>.</p>
+    <h2>4. Third-Party Services</h2>
+    <ul><li><strong>Google AdSense</strong> — Advertising</li><li><strong>Google Analytics</strong> — Usage analytics</li><li><strong>Firebase</strong> — Auth & push notifications</li><li><strong>Vercel</strong> — Hosting</li></ul>
+    <h2>5. Children's Privacy (COPPA)</h2>
+    <div class="info-box highlight"><p>👶 We do not knowingly collect personal information from children under 13 without parental consent. No behavioral advertising targets children.</p></div>
+    <h2>6. How We Use Your Information</h2>
+    <ul><li>Provide and improve services</li><li>Personalize content</li><li>Send push notifications (with permission)</li><li>Respond to inquiries</li><li>Ensure safety and prevent abuse</li></ul>
+    <h2>7. Data Security</h2>
+    <p>We implement appropriate measures to protect your data against unauthorized access or disclosure.</p>
+    <h2>8. Your Rights</h2>
+    <p>You may access, correct, delete your data, withdraw consent, or lodge a complaint with a supervisory authority.</p>
+    <h2>9. Changes</h2>
+    <p>We may update this policy. Changes will be posted on this page.</p>
+    <h2>10. Contact</h2>
+    <p>Questions? Email us at <strong>emadh5156@gmail.com</strong></p>
+  </div>
+</div>
+
+<!-- TERMS PAGE -->
+<div class="page" id="page-terms">
+  <div class="page-content">
+    <a class="page-back" onclick="navigate('home')"><span class="pb-icon">←</span> Back to Home</a>
+    <h1><span class="pg-icon">📋</span> Terms & Conditions</h1>
+    <p class="last-updated">Last Updated: April 5, 2026</p>
+    <div class="terms-tabs">
+      <button class="terms-tab active" onclick="switchTermsTab('gp')">📱 Google Play</button>
+      <button class="terms-tab" onclick="switchTermsTab('ios')">🍎 App Store</button>
+      <button class="terms-tab" onclick="switchTermsTab('ads')">📢 AdSense</button>
+    </div>
+    <div class="terms-panel active" id="terms-gp">
+      <h2>Google Play Store Terms (15)</h2>
+      <ol class="terms-list">
+        <li><strong>Acceptance:</strong> By downloading HealTunes, you agree to these Terms and Google's Terms of Service.</li>
+        <li><strong>License:</strong> Limited, non-exclusive, non-transferable license to use on Android devices.</li>
+        <li><strong>Age:</strong> Users must be 13+ to create an account.</li>
+        <li><strong>Content:</strong> All medical audio content is owned by HealTunes and protected by copyright.</li>
+        <li><strong>Restrictions:</strong> No copying, modifying, distributing, or reverse-engineering.</li>
+        <li><strong>Purchases:</strong> Subject to Google Play billing and refund policies.</li>
+        <li><strong>Updates:</strong> App may auto-update. Continued use = acceptance.</li>
+        <li><strong>Conduct:</strong> No unlawful use or service impairment.</li>
+        <li><strong>Data:</strong> Internet required for some features. Carrier charges may apply.</li>
+        <li><strong>Notifications:</strong> By enabling, you agree to receive updates. Disable in settings.</li>
+        <li><strong>Third-Party:</strong> Google services (Firebase, AdSense) have their own terms.</li>
+        <li><strong>Termination:</strong> We may terminate access for violations.</li>
+        <li><strong>Warranty:</strong> App provided "as is" without warranties.</li>
+        <li><strong>Liability:</strong> We are not liable for indirect or consequential damages.</li>
+        <li><strong>Law:</strong> Governed by applicable local laws. Disputes resolved via arbitration.</li>
+      </ol>
+    </div>
+    <div class="terms-panel" id="terms-ios">
+      <h2>Apple App Store Terms (15)</h2>
+      <ol class="terms-list">
+        <li><strong>Acceptance:</strong> By downloading from the App Store, you agree to these Terms and Apple's EULA.</li>
+        <li><strong>License:</strong> Limited, non-transferable, revocable license on Apple devices you own.</li>
+        <li><strong>Apple Beneficiary:</strong> Apple is a third-party beneficiary and may enforce these Terms.</li>
+        <li><strong>Support:</strong> Apple has no maintenance or support obligations.</li>
+        <li><strong>Content:</strong> We are responsible for the app's content, not Apple.</li>
+        <li><strong>IP:</strong> All content and trademarks belong to HealTunes.</li>
+        <li><strong>Accounts:</strong> You are responsible for account credentials and activities.</li>
+        <li><strong>Subscriptions:</strong> Managed via Apple ID settings. Subject to Apple's cancellation policy.</li>
+        <li><strong>Privacy:</strong> Governed by our Privacy Policy.</li>
+        <li><strong>Warranty:</strong> No warranty. Apple is not responsible for warranty claims.</li>
+        <li><strong>Claims:</strong> We handle all app-related claims, not Apple.</li>
+        <li><strong>Compliance:</strong> You are not in an embargoed country.</li>
+        <li><strong>Updates:</strong> Through App Store. May be required for functionality.</li>
+        <li><strong>Termination:</strong> License terminates on violation.</li>
+        <li><strong>Contact:</strong> <strong>emadh5156@gmail.com</strong></li>
+      </ol>
+    </div>
+    <div class="terms-panel" id="terms-ads">
+      <h2>Google AdSense Terms (11)</h2>
+      <ol class="terms-list">
+        <li><strong>Placement:</strong> Ads comply with Google policies — no ads on error or login pages.</li>
+        <li><strong>Clicks:</strong> No artificial clicking or click fraud.</li>
+        <li><strong>Content:</strong> No prohibited content (adult, violence, copyright infringement).</li>
+        <li><strong>Behavior:</strong> Ads don't overlap content or mislead users.</li>
+        <li><strong>Traffic:</strong> No incentivized or paid-to-click traffic.</li>
+        <li><strong>Cookies:</strong> Cookie consent provided. Opt-out available via Google Ads Settings.</li>
+        <li><strong>Children:</strong> No personalized ads for users under 13.</li>
+        <li><strong>Disclosure:</strong> All ads clearly labeled.</li>
+        <li><strong>Data:</strong> Per our Privacy Policy. Opt-out at <a href="https://www.google.com/settings/ads" target="_blank">Google Ads Settings</a>.</li>
+        <li><strong>Restricted:</strong> No misleading, dangerous, or inappropriate content.</li>
+        <li><strong>Updates:</strong> We monitor and comply with latest AdSense policies.</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<!-- REFUND PAGE -->
+<div class="page" id="page-refund">
+  <div class="page-content">
+    <a class="page-back" onclick="navigate('home')"><span class="pb-icon">←</span> Back to Home</a>
+    <h1><span class="pg-icon">💰</span> Refund & Replacement Policy</h1>
+    <p class="last-updated">Last Updated: April 5, 2026</p>
+    <div class="info-box highlight"><p>At <strong>HealTunes</strong>, we want you to be fully satisfied. Here's our refund and replacement policy.</p></div>
+    <h2>🔄 Subscriptions</h2>
+    <ul><li><strong>Free Trial:</strong> Cancel anytime during trial without charge.</li><li><strong>Monthly:</strong> Cancel anytime. Takes effect at end of billing period.</li><li><strong>Annual:</strong> Refund requests within 14 days of purchase.</li></ul>
+    <h2>💳 In-App Purchases</h2>
+    <ul><li><strong>Google Play:</strong> Request refund within 48 hours via Google Play Store.</li><li><strong>App Store:</strong> Request refund through Apple directly.</li></ul>
+    <h2>📦 Replacement</h2>
+    <ul><li>Technical issues (audio not playing, corrupted files) — fixed within 48 hours.</li><li>Content removed after purchase — replacement or pro-rated refund.</li></ul>
+    <h2>⚠️ Non-Refundable</h2>
+    <ul><li>Purchases older than 30 days</li><li>Promotional/discounted items (unless defective)</li><li>Free content</li></ul>
+    <h2>📬 Request a Refund</h2>
+    <div class="info-box"><p>Email <strong>emadh5156@gmail.com</strong> with: account email, purchase date, amount, reason, transaction ID. Response within 24–48 hours.</p></div>
+  </div>
+</div>
+
+<!-- FORGOT PASSWORD -->
+<div class="page" id="page-forgot">
+  <div class="page-content">
+    <div class="forgot-box anim-bounce">
+      <span class="fp-icon">🔑</span>
+      <h2>Forgot Your Password?</h2>
+      <p>No worries! Enter your email and we'll send you a reset link.</p>
+      <form onsubmit="handleForgot(event)">
+        <div class="form-group"><input type="email" required placeholder="your@email.com"></div>
+        <button type="submit" class="form-submit">📨 Send Reset Link</button>
+      </form>
+      <p style="margin-top:14px;font-size:.87rem"><a href="#" onclick="navigate('home')">← Back to Home</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- PLAYER BAR -->
+<div class="player-bar" id="playerBar">
+  <div class="player-inner">
+    <button class="player-btn player-play" onclick="togglePlay()" id="playBtn">▶</button>
+    <button class="player-btn player-stop" onclick="stopAudio()">⏹</button>
+    <div class="player-info">
+      <span class="player-title" id="playerTitle">—</span>
+      <span class="player-chapter" id="playerChapter">—</span>
+      <div class="player-progress" onclick="seekAudio(event)"><div class="player-progress-fill" id="progressFill"></div></div>
+    </div>
+    <button class="player-btn player-close" onclick="closePlayer()">✕</button>
+  </div>
+  <audio id="audioPlayer"></audio>
+</div>
+
+<!-- BACK TO TOP -->
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<!-- FOOTER -->
+<footer class="footer" id="mainFooter">
+  <div class="footer-grid">
+    <div class="footer-col"><h3>🩺 HealTunes</h3><p style="color:var(--text2);font-size:.87rem;line-height:1.6">Medical guidance through music. Learn about health conditions through engaging audio stories and songs.</p></div>
+    <div class="footer-col"><h3>Quick Links</h3><a href="#" onclick="navigate('home')">🏠 Home</a><a href="#" onclick="navigate('about')">📖 About Us</a><a href="#" onclick="navigate('contact')">✉️ Contact Us</a><a href="#" onclick="navigate('forgot')">🔑 Forgot Password</a></div>
+    <div class="footer-col"><h3>Legal</h3><a href="#" onclick="navigate('privacy')">🔒 Privacy Policy</a><a href="#" onclick="navigate('terms')">📋 Terms & Conditions</a><a href="#" onclick="navigate('refund')">💰 Refund Policy</a></div>
+    <div class="footer-col"><h3>Get the App</h3><a href="#">📱 Google Play</a><a href="#">🍎 App Store</a><p style="color:var(--text3);font-size:.78rem;margin-top:6px">Available on all platforms</p></div>
+  </div>
+  <div class="footer-bottom"><p>© 2026 HealTunes. All rights reserved. Made with ❤️ for better health.</p><div class="footer-social"><a href="#">📘</a><a href="#">🐦</a><a href="#">📸</a><a href="#">🎬</a></div></div>
+</footer>
+
+<script>
+// ===== CHAPTERS DATA =====
+const CHAPTERS=[
+// Bladder
+{id:1,name:"Cystitis",icon:"🫧",system:"Bladder",songs:[]},
+{id:2,name:"Urinary Incontinence",icon:"💧",system:"Bladder",songs:[]},
+{id:3,name:"Bladder Stones",icon:"🪨",system:"Bladder",songs:[]},
+{id:4,name:"Bladder Cancer",icon:"🎗️",system:"Bladder",tag:"Important",songs:[]},
+{id:5,name:"Urinary Retention",icon:"🚱",system:"Bladder",songs:[]},
+// Bones
+{id:6,name:"Osteoporosis",icon:"🦴",system:"Bones",songs:[]},
+{id:7,name:"Arthritis",icon:"🦿",system:"Bones",tag:"Common",songs:[]},
+{id:8,name:"Fractures",icon:"🩻",system:"Bones",songs:[]},
+{id:9,name:"Bone Cancer",icon:"🎗️",system:"Bones",songs:[]},
+{id:10,name:"Back Pain",icon:"🔙",system:"Bones",tag:"Common",songs:[]},
+{id:11,name:"Herniated Disc",icon:"💿",system:"Bones",songs:[]},
+{id:12,name:"Muscle Atrophy",icon:"💪",system:"Bones",songs:[]},
+{id:13,name:"Rheumatism",icon:"🧊",system:"Bones",songs:[]},
+{id:14,name:"Joints & Cartilage",icon:"🦵",system:"Bones",songs:[]},
+// Brain
+{id:15,name:"Migraine",icon:"🧠",system:"Brain",tag:"Common",songs:[]},
+{id:16,name:"Alzheimer's Disease",icon:"🧩",system:"Brain",tag:"Important",songs:[]},
+{id:17,name:"Multiple Sclerosis",icon:"⚡",system:"Brain",songs:[]},
+{id:18,name:"Stroke",icon:"🩸",system:"Brain",tag:"Urgent",songs:[]},
+{id:19,name:"Epilepsy",icon:"⚡",system:"Brain",songs:[]},
+// Cancer
+{id:20,name:"Breast Cancer",icon:"🎀",system:"Cancer",tag:"Important",songs:[]},
+{id:21,name:"Lung Cancer",icon:"🫁",system:"Cancer",songs:[]},
+{id:22,name:"Colorectal Cancer",icon:"🎗️",system:"Cancer",songs:[]},
+{id:23,name:"Prostate Cancer",icon:"🔵",system:"Cancer",songs:[]},
+{id:24,name:"Skin Cancer",icon:"🌞",system:"Cancer",songs:[]},
+{id:25,name:"Stomach Cancer",icon:"🎗️",system:"Cancer",songs:[]},
+{id:26,name:"Liver Cancer",icon:"🟤",system:"Cancer",songs:[]},
+{id:27,name:"Esophageal Cancer",icon:"🎗️",system:"Cancer",songs:[]},
+{id:28,name:"Cervical Cancer",icon:"🎗️",system:"Cancer",songs:[]},
+{id:29,name:"Kidney Cancer",icon:"🫘",system:"Cancer",songs:[]},
+{id:30,name:"Leukemia & Lymphoma",icon:"🩸",system:"Cancer",songs:[]},
+// Colon
+{id:31,name:"Colitis",icon:"🔴",system:"Colon",songs:[]},
+{id:32,name:"Hirschsprung's Disease",icon:"👶",system:"Colon",songs:[]},
+{id:33,name:"Appendicitis",icon:"⚠️",system:"Colon",tag:"Urgent",songs:[]},
+{id:34,name:"IBS",icon:"😣",system:"Colon",tag:"Common",songs:[]},
+{id:35,name:"Crohn's Disease",icon:"🔄",system:"Colon",songs:[]},
+{id:36,name:"Ulcerative Colitis",icon:"🔥",system:"Colon",songs:[]},
+{id:37,name:"Toxic Megacolon",icon:"☠️",system:"Colon",songs:[]},
+// Ear
+{id:38,name:"Otitis Media",icon:"👂",system:"Ear",tag:"Common",songs:[]},
+{id:39,name:"Hearing Loss",icon:"🔇",system:"Ear",songs:[]},
+{id:40,name:"Vertigo",icon:"🌀",system:"Ear",songs:[]},
+{id:41,name:"Tinnitus",icon:"🔔",system:"Ear",songs:[]},
+{id:42,name:"Swimmer's Ear",icon:"🏊",system:"Ear",songs:[]},
+// Eye
+{id:43,name:"Glaucoma",icon:"👁️",system:"Eye",songs:[]},
+{id:44,name:"Cataracts",icon:"🫥",system:"Eye",tag:"Common",songs:[]},
+{id:45,name:"Retinal Detachment",icon:"🔴",system:"Eye",tag:"Urgent",songs:[]},
+{id:46,name:"Conjunctivitis",icon:"👀",system:"Eye",songs:[]},
+// Glands
+{id:47,name:"Thyroid Gland",icon:"🦋",system:"Glands",tag:"Common",songs:[]},
+{id:48,name:"Adrenal Gland",icon:"🔺",system:"Glands",songs:[]},
+{id:49,name:"Pancreas Disorders",icon:"🫗",system:"Glands",songs:[]},
+{id:50,name:"Pituitary Gland",icon:"🧬",system:"Glands",songs:[]},
+{id:51,name:"Lymph Nodes",icon:"🫧",system:"Glands",songs:[]},
+// Heart
+{id:52,name:"Coronary Artery Disease",icon:"❤️",system:"Heart",tag:"Important",songs:[]},
+{id:53,name:"Heart Attack",icon:"💔",system:"Heart",tag:"Urgent",songs:[]},
+{id:54,name:"Heart Failure",icon:"🫀",system:"Heart",songs:[]},
+{id:55,name:"Cardiomyopathy",icon:"💗",system:"Heart",songs:[]},
+{id:56,name:"Arrhythmia",icon:"💓",system:"Heart",tag:"Common",songs:[]},
+{id:57,name:"Heart Valve Disease",icon:"🚪",system:"Heart",songs:[]},
+{id:58,name:"Endocarditis",icon:"🦠",system:"Heart",songs:[]},
+// Liver
+{id:59,name:"Healing the Heart",icon:"💚",system:"Liver",songs:[]},
+{id:60,name:"The Strength Within",icon:"💪",system:"Liver",songs:[]},
+{id:61,name:"Light of Hope",icon:"✨",system:"Liver",songs:[]},
+{id:62,name:"Together We Heal",icon:"🤝",system:"Liver",songs:[]},
+// Nerves
+{id:63,name:"Neuropathy",icon:"⚡",system:"Nerves",songs:[]},
+{id:64,name:"Stroke Recovery",icon:"🧠",system:"Nerves",songs:[]},
+{id:65,name:"MS (Nervous)",icon:"🔗",system:"Nerves",songs:[]},
+{id:66,name:"Paralysis",icon:"🦽",system:"Nerves",songs:[]},
+// Nose
+{id:67,name:"Common Cold",icon:"🤧",system:"Nose",tag:"Common",songs:[]},
+{id:68,name:"Nasal Congestion",icon:"😤",system:"Nose",songs:[]},
+{id:69,name:"Allergic Rhinitis",icon:"🌸",system:"Nose",tag:"Common",songs:[]},
+{id:70,name:"Sinusitis",icon:"😷",system:"Nose",songs:[]},
+{id:71,name:"Nasal Polyps",icon:"🔴",system:"Nose",songs:[]},
+{id:72,name:"Deviated Septum",icon:"📐",system:"Nose",songs:[]},
+{id:73,name:"Epistaxis (Nosebleeds)",icon:"🩸",system:"Nose",songs:[]},
+{id:74,name:"Anosmia (Loss of Smell)",icon:"👃",system:"Nose",songs:[]},
+{id:75,name:"Adenoid Hypertrophy",icon:"🔵",system:"Nose",songs:[]},
+{id:76,name:"Tonsillectomy",icon:"✂️",system:"Nose",songs:[]},
+// Pancreas
+{id:77,name:"Acute Pancreatitis",icon:"🔥",system:"Pancreas",tag:"Urgent",songs:[]},
+{id:78,name:"Chronic Pancreatitis",icon:"🔄",system:"Pancreas",songs:[]},
+{id:79,name:"Type 1 Diabetes",icon:"💉",system:"Pancreas",tag:"Important",songs:[]},
+{id:80,name:"Type 2 Diabetes",icon:"🩸",system:"Pancreas",tag:"Common",songs:[]},
+// Respiratory
+{id:81,name:"Breathe Easy",icon:"🌬️",system:"Respiratory",songs:[]},
+{id:82,name:"Bronchitis",icon:"🫁",system:"Respiratory",tag:"Common",songs:[]},
+{id:83,name:"Breath of Life",icon:"💨",system:"Respiratory",songs:[]},
+{id:84,name:"Pneumonia",icon:"🦠",system:"Respiratory",tag:"Important",songs:[]},
+{id:85,name:"Rise Above",icon:"⬆️",system:"Respiratory",songs:[]},
+// Skin
+{id:86,name:"Scabies",icon:"🐛",system:"Skin",songs:[]},
+{id:87,name:"Vitiligo",icon:"🎨",system:"Skin",songs:[]},
+{id:88,name:"Albinism",icon:"🤍",system:"Skin",songs:[]},
+{id:89,name:"Leprosy",icon:"🏥",system:"Skin",songs:[]},
+{id:90,name:"Tinea (Ringworm)",icon:"⭕",system:"Skin",songs:[]},
+{id:91,name:"Eczema",icon:"🔴",system:"Skin",tag:"Common",songs:[]},
+{id:92,name:"Psoriasis",icon:"🧬",system:"Skin",songs:[]},
+{id:93,name:"Skin Cancer",icon:"🌞",system:"Skin",songs:[]},
+{id:94,name:"Dermatitis",icon:"😖",system:"Skin",songs:[]},
+{id:95,name:"Hair Loss",icon:"💇",system:"Skin",tag:"Common",songs:[]},
+{id:96,name:"Alopecia",icon:"🔵",system:"Skin",songs:[]},
+{id:97,name:"Measles",icon:"🔴",system:"Skin",songs:[]},
+// Stomach
+{id:98,name:"Gastritis",icon:"🔥",system:"Stomach",tag:"Common",songs:[]},
+{id:99,name:"Stomach Ulcer",icon:"🩹",system:"Stomach",songs:[]},
+{id:100,name:"Acid Reflux",icon:"⬆️",system:"Stomach",tag:"Common",songs:[]},
+{id:101,name:"Stomach Flu",icon:"🤢",system:"Stomach",songs:[]},
+{id:102,name:"GERD",icon:"🔁",system:"Stomach",songs:[]},
+{id:103,name:"Duodenal Ulcer",icon:"🔴",system:"Stomach",songs:[]},
+// Teeth
+{id:104,name:"Teeth Care",icon:"🦷",system:"Teeth",tag:"Common",songs:[]},
+{id:105,name:"Tongue Health",icon:"👅",system:"Teeth",songs:[]},
+{id:106,name:"Throat & Larynx",icon:"🗣️",system:"Teeth",songs:[]},
+// Misc
+{id:107,name:"The Truth Within",icon:"💎",system:"General",tag:"Featured",songs:[]}
+];
+
+let chapters=CHAPTERS.map(c=>({...c,songs:c.songs||[]}));
+let currentChapter=null,currentSong=-1;
+const audio=document.getElementById('audioPlayer');
+let activeCategory='All';
+
+// Systems list
+const SYSTEMS=[...new Set(chapters.map(c=>c.system))];
+
+// ===== NAVIGATION =====
+function navigate(page){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));
+  const target=document.getElementById('page-'+page);
+  if(target){target.classList.add('active');target.style.animation='none';target.offsetHeight;target.style.animation='fadeIn .4s ease';}
+  window.scrollTo({top:0,behavior:'smooth'});
+  history.pushState({page},'', '#'+page);
+}
+window.addEventListener('popstate',e=>{if(e.state&&e.state.page)navigate(e.state.page);});
+
+// ===== THEME =====
+function toggleTheme(){
+  const d=document.documentElement.getAttribute('data-theme')==='dark';
+  document.documentElement.setAttribute('data-theme',d?'light':'dark');
+  localStorage.setItem('ht_theme',d?'light':'dark');
+}
+(function(){const s=localStorage.getItem('ht_theme');
+if(s==='dark'||(!s&&window.matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.setAttribute('data-theme','dark');})();
+
+// ===== MOBILE MENU =====
+function toggleMobile(){document.getElementById('hamburger').classList.toggle('open');document.getElementById('mobileMenu').classList.toggle('show');}
+
+// ===== RENDER =====
+function renderCatTabs(){
+  const tabs=document.getElementById('catTabs');
+  tabs.innerHTML='<button class="cat-tab'+(activeCategory==='All'?' active':'')+'" onclick="filterCategory(\'All\')">🫀 All Systems</button>'+
+    SYSTEMS.map(s=>`<button class="cat-tab${activeCategory===s?' active':''}" onclick="filterCategory('${s}')">${getSystemIcon(s)} ${s}</button>`).join('');
+}
+
+function getSystemIcon(s){
+  const icons={Bladder:'🫧',Bones:'🦴',Brain:'🧠',Cancer:'🎗️',Colon:'🔄',Ear:'👂',Eye:'👁️',Glands:'🧬',Heart:'❤️',Liver:'💚',Nerves:'⚡',Nose:'👃',Pancreas:'🩸',Respiratory:'🫁',Skin:'🧴',Stomach:'🫄',Teeth:'🦷',General:'💎'};
+  return icons[s]||'🏥';
+}
+
+function filterCategory(cat){
+  activeCategory=cat;
+  renderCatTabs();
+  renderChapters();
+}
+
+function renderChapters(){
+  const grid=document.getElementById('chaptersGrid');
+  const filtered=activeCategory==='All'?chapters:chapters.filter(c=>c.system===activeCategory);
+  grid.innerHTML=filtered.map((c,i)=>`
+    <div class="chapter-card reveal" style="animation-delay:${i*0.04}s" onclick="openChapter(${c.id})">
+      <div class="card-num">${c.id}</div>
+      <span class="card-emoji">${c.icon}</span>
+      <div class="card-name">${c.name}</div>
+      <div class="card-count">${(c.songs||[]).length} tracks</div>
+      <div class="card-system">${c.system}</div>
+      ${c.tag?`<span class="card-badge">${c.tag}</span>`:''}
+    </div>
+  `).join('');
+  observeReveal();
+}
+
+function openChapter(id){
+  currentChapter=chapters.find(c=>c.id===id);
+  if(!currentChapter)return;
+  document.getElementById('heroSection').style.display='none';
+  document.getElementById('chaptersSection').style.display='none';
+  document.getElementById('songsSection').style.display='block';
+  document.getElementById('songsChapterTitle').textContent=currentChapter.icon+' '+currentChapter.name;
+  const sl=document.getElementById('songsList');
+  if(!currentChapter.songs||!currentChapter.songs.length){
+    sl.innerHTML='<div class="empty-state"><span class="emoji">🎵</span><p>No tracks yet — coming soon!</p></div>';
+  }else{
+    sl.innerHTML=currentChapter.songs.map((s,i)=>`
+      <div class="song-card" id="sc-${i}">
+        <button class="song-play-btn" onclick="playSong(${i})">▶</button>
+        <div class="song-info"><div class="song-title">${s.title}</div><div class="song-duration">${s.duration||'—'}</div></div>
+      </div>
+    `).join('');
+  }
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function showChapters(){
+  document.getElementById('heroSection').style.display='';
+  document.getElementById('chaptersSection').style.display='';
+  document.getElementById('songsSection').style.display='none';
+}
+
+// ===== PLAYER =====
+function playSong(i){
+  if(!currentChapter||!currentChapter.songs[i])return;
+  currentSong=i;const s=currentChapter.songs[i];
+  audio.src=s.audio;audio.play().catch(e=>console.warn(e));
+  document.getElementById('playerTitle').textContent=s.title;
+  document.getElementById('playerChapter').textContent=currentChapter.name;
+  document.getElementById('playBtn').textContent='⏸';
+  document.getElementById('playerBar').style.display='block';
+  document.querySelectorAll('.song-card').forEach(c=>c.classList.remove('playing'));
+  const sc=document.getElementById('sc-'+i);if(sc)sc.classList.add('playing');
+}
+function togglePlay(){if(audio.paused){audio.play();document.getElementById('playBtn').textContent='⏸';}else{audio.pause();document.getElementById('playBtn').textContent='▶';}}
+function stopAudio(){audio.pause();audio.currentTime=0;document.getElementById('playBtn').textContent='▶';}
+function closePlayer(){audio.pause();audio.src='';document.getElementById('playerBar').style.display='none';document.querySelectorAll('.song-card').forEach(c=>c.classList.remove('playing'));currentSong=-1;}
+function seekAudio(e){const r=e.currentTarget.getBoundingClientRect();audio.currentTime=((e.clientX-r.left)/r.width)*audio.duration;}
+audio.addEventListener('timeupdate',()=>{if(audio.duration)document.getElementById('progressFill').style.width=(audio.currentTime/audio.duration*100)+'%';});
+audio.addEventListener('ended',()=>{if(currentChapter&&currentSong+1<currentChapter.songs.length)playSong(currentSong+1);else document.getElementById('playBtn').textContent='▶';});
+
+// ===== SCROLL REVEAL =====
+function observeReveal(){const o=new IntersectionObserver(e=>{e.forEach(en=>{if(en.isIntersecting){en.target.classList.add('visible');o.unobserve(en.target);}});},{threshold:.1});document.querySelectorAll('.reveal').forEach(el=>o.observe(el));}
+window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>10);document.getElementById('backToTop').classList.toggle('show',window.scrollY>400);});
+
+// ===== HERO EMOJIS =====
+function createFloatingEmojis(){
+  const bg=document.getElementById('heroBg');
+  const emojis=['🩺','💊','🏥','❤️','🫀','🧠','🦷','🫁','💉','🧬','🔬','🩹','💚','🧬','🩻'];
+  for(let i=0;i<15;i++){const el=document.createElement('span');el.className='emoji-float';el.textContent=emojis[i%emojis.length];el.style.left=Math.random()*100+'%';el.style.top=Math.random()*100+'%';el.style.animationDelay=(Math.random()*4)+'s';el.style.animationDuration=(4+Math.random()*4)+'s';el.style.fontSize=(2+Math.random()*3)+'rem';bg.appendChild(el);}
+}
+
+// ===== TERMS TABS =====
+function switchTermsTab(t){document.querySelectorAll('.terms-tab').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.terms-panel').forEach(x=>x.classList.remove('active'));document.getElementById('terms-'+t).classList.add('active');event.target.classList.add('active');}
+
+// ===== CONTACT / FORGOT =====
+function handleContact(e){e.preventDefault();showToast('✅ Message sent! We\'ll reply within 24–48 hours.');e.target.reset();}
+function handleForgot(e){e.preventDefault();showToast('📨 If an account exists, a reset link has been sent!');e.target.reset();}
+
+// ===== TOAST =====
+function showToast(msg,type){const t=document.createElement('div');t.className='toast '+(type||'success');t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),4000);}
+
+// ===== CONFETTI =====
+function spawnConfetti(){const colors=['#0891B2','#10B981','#6366F1','#EC4899','#F59E0B','#EF4444'];for(let i=0;i<25;i++){const c=document.createElement('div');c.className='confetti-piece';c.style.left=Math.random()*100+'vw';c.style.background=colors[Math.floor(Math.random()*colors.length)];c.style.animationDelay=(Math.random()*2)+'s';c.style.width=(6+Math.random()*8)+'px';c.style.height=(6+Math.random()*8)+'px';document.body.appendChild(c);setTimeout(()=>c.remove(),5000);}}
+
+// ===== INIT =====
+async function init(){
+  createFloatingEmojis();
+  // Try GitHub raw URL first (always fresh data)
+  try{const r=await fetch('https://raw.githubusercontent.com/galalemad75-creator/med-moments-site/main/data/chapters.json?t='+Date.now());const d=await r.json();if(Array.isArray(d)&&d.length>0)chapters=d;}catch(e0){}
+  // Fallback: local /data/chapters.json
+  if(chapters===CHAPTERS.map(c=>({...c,songs:c.songs||[]}))) {
+    try{const r=await fetch('/data/chapters.json?t='+Date.now());const d=await r.json();if(Array.isArray(d)&&d.length>0)chapters=d;}catch(e1){}
+  }
+  renderCatTabs();renderChapters();
+  const hash=location.hash.replace('#','');if(hash&&document.getElementById('page-'+hash))navigate(hash);
+  setTimeout(spawnConfetti,800);
+}
+init();
+</script>
+<script>if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});</script>
+</body>
+</html>

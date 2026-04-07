@@ -1,0 +1,10 @@
+{
+  "name": "HealTunes",
+  "short_name": "HealTunes",
+  "description": "Medical guidance through music — learn about health conditions through audio stories and songs.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F0F9FF",
+  "theme_color": "#0891B2",
+  "icons": [{"src":"data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🩺</text></svg>","sizes":"any","type":"image/svg+xml"}]
+}
