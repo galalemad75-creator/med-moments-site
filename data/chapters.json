@@ -15,7 +15,7 @@
   {
     "id": 2,
     "name": "Urinary Incontinence",
-    "icon": "💧",
+    "icon": "🚽",
     "system": "Bladder",
     "songs": []
   },
@@ -51,7 +51,7 @@
   {
     "id": 7,
     "name": "Arthritis",
-    "icon": "🦿",
+    "icon": "🔥",
     "system": "Bones",
     "tag": "Common",
     "songs": []
@@ -59,7 +59,7 @@
   {
     "id": 8,
     "name": "Fractures",
-    "icon": "💔",
+    "icon": "🦴",
     "system": "Bones",
     "songs": []
   },
@@ -73,7 +73,7 @@
   {
     "id": 10,
     "name": "Back Pain",
-    "icon": "🔙",
+    "icon": "😫",
     "system": "Bones",
     "tag": "Common",
     "songs": []
@@ -88,14 +88,14 @@
   {
     "id": 12,
     "name": "Muscle Atrophy",
-    "icon": "💪",
+    "icon": "📉",
     "system": "Bones",
     "songs": []
   },
   {
     "id": 13,
     "name": "Rheumatism",
-    "icon": "🧊",
+    "icon": "🔥",
     "system": "Bones",
     "songs": []
   },
@@ -125,7 +125,7 @@
   {
     "id": 17,
     "name": "Multiple Sclerosis",
-    "icon": "⚡",
+    "icon": "🧠",
     "system": "Brain",
     "songs": []
   },
@@ -169,14 +169,14 @@
   {
     "id": 23,
     "name": "Prostate Cancer",
-    "icon": "🔵",
+    "icon": "🎗️",
     "system": "Cancer",
     "songs": []
   },
   {
     "id": 24,
     "name": "Skin Cancer",
-    "icon": "🌞",
+    "icon": "🎗️",
     "system": "Cancer",
     "songs": []
   },
@@ -190,7 +190,7 @@
   {
     "id": 26,
     "name": "Liver Cancer",
-    "icon": "🟤",
+    "icon": "🎗️",
     "system": "Cancer",
     "songs": []
   },
@@ -225,7 +225,7 @@
   {
     "id": 31,
     "name": "Colitis",
-    "icon": "🔴",
+    "icon": "🔥",
     "system": "Colon",
     "songs": []
   },
@@ -255,7 +255,7 @@
   {
     "id": 35,
     "name": "Crohn's Disease",
-    "icon": "🔄",
+    "icon": "🦠",
     "system": "Colon",
     "songs": []
   },
@@ -269,7 +269,7 @@
   {
     "id": 37,
     "name": "Toxic Megacolon",
-    "icon": "☠️",
+    "icon": "⚠️",
     "system": "Colon",
     "songs": []
   },
@@ -319,7 +319,7 @@
   {
     "id": 44,
     "name": "Cataracts",
-    "icon": "😑",
+    "icon": "☁️",
     "system": "Eye",
     "tag": "Common",
     "songs": []
@@ -327,7 +327,7 @@
   {
     "id": 45,
     "name": "Retinal Detachment",
-    "icon": "🔴",
+    "icon": "👁️",
     "system": "Eye",
     "tag": "Urgent",
     "songs": []
@@ -350,7 +350,7 @@
   {
     "id": 48,
     "name": "Adrenal Gland",
-    "icon": "🔺",
+    "icon": "💪",
     "system": "Glands",
     "songs": []
   },
@@ -371,7 +371,7 @@
   {
     "id": 51,
     "name": "Lymph Nodes",
-    "icon": "💧",
+    "icon": "🔴",
     "system": "Glands",
     "songs": []
   },
@@ -386,7 +386,7 @@
   {
     "id": 53,
     "name": "Heart Attack",
-    "icon": "💔",
+    "icon": "🚨",
     "system": "Heart",
     "tag": "Urgent",
     "songs": []
@@ -437,7 +437,7 @@
   {
     "id": 60,
     "name": "The Strength Within",
-    "icon": "💪",
+    "icon": "💚",
     "system": "Liver",
     "songs": []
   },
@@ -472,7 +472,7 @@
   {
     "id": 65,
     "name": "MS (Nervous)",
-    "icon": "🔗",
+    "icon": "🧠",
     "system": "Nerves",
     "songs": []
   },
@@ -551,7 +551,7 @@
   {
     "id": 76,
     "name": "Tonsillectomy",
-    "icon": "✂️",
+    "icon": "🏥",
     "system": "Nose",
     "songs": []
   },
@@ -611,7 +611,7 @@
   {
     "id": 84,
     "name": "Pneumonia",
-    "icon": "🦠",
+    "icon": "🫁",
     "system": "Respiratory",
     "tag": "Important",
     "songs": []
@@ -626,7 +626,7 @@
   {
     "id": 86,
     "name": "Scabies",
-    "icon": "🐛",
+    "icon": "🦠",
     "system": "Skin",
     "songs": []
   },
@@ -654,14 +654,14 @@
   {
     "id": 90,
     "name": "Tinea (Ringworm)",
-    "icon": "⭕",
+    "icon": "🔬",
     "system": "Skin",
     "songs": []
   },
   {
     "id": 91,
     "name": "Eczema",
-    "icon": "🔴",
+    "icon": "🔥",
     "system": "Skin",
     "tag": "Common",
     "songs": []
@@ -669,14 +669,14 @@
   {
     "id": 92,
     "name": "Psoriasis",
-    "icon": "🧬",
+    "icon": "🔥",
     "system": "Skin",
     "songs": []
   },
   {
     "id": 93,
     "name": "Skin Cancer",
-    "icon": "🌞",
+    "icon": "🎗️",
     "system": "Skin",
     "songs": []
   },
@@ -742,7 +742,7 @@
   {
     "id": 102,
     "name": "GERD",
-    "icon": "🔁",
+    "icon": "🔥",
     "system": "Stomach",
     "songs": []
   },
@@ -764,7 +764,7 @@
   {
     "id": 105,
     "name": "Tongue Health",
-    "icon": "👅",
+    "icon": "👄",
     "system": "Teeth",
     "songs": []
   },
@@ -778,7 +778,7 @@
   {
     "id": 107,
     "name": "The Truth Within",
-    "icon": "💎",
+    "icon": "🏥",
     "system": "General",
     "tag": "Featured",
     "songs": []
