@@ -155,56 +155,56 @@
   {
     "id": 21,
     "name": "Lung Cancer",
-    "icon": "🎗️",
+    "icon": "🫁",
     "system": "Cancer",
     "songs": []
   },
   {
     "id": 22,
     "name": "Colorectal Cancer",
-    "icon": "🎗️",
+    "icon": "🟢",
     "system": "Cancer",
     "songs": []
   },
   {
     "id": 23,
     "name": "Prostate Cancer",
-    "icon": "🎗️",
+    "icon": "🔵",
     "system": "Cancer",
     "songs": []
   },
   {
     "id": 24,
     "name": "Skin Cancer",
-    "icon": "🎗️",
+    "icon": "🧴",
     "system": "Cancer",
     "songs": []
   },
   {
     "id": 25,
     "name": "Stomach Cancer",
-    "icon": "🎗️",
+    "icon": "🟡",
     "system": "Cancer",
     "songs": []
   },
   {
     "id": 26,
     "name": "Liver Cancer",
-    "icon": "🎗️",
+    "icon": "🟤",
     "system": "Cancer",
     "songs": []
   },
   {
     "id": 27,
     "name": "Esophageal Cancer",
-    "icon": "🎗️",
+    "icon": "⚫",
     "system": "Cancer",
     "songs": []
   },
   {
     "id": 28,
     "name": "Cervical Cancer",
-    "icon": "🎗️",
+    "icon": "🟣",
     "system": "Cancer",
     "songs": []
   },
