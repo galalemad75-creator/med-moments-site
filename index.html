@@ -144,6 +144,8 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none}
 .card-num{width:40px;height:40px;background:var(--gradient);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.9rem;color:#fff;margin-bottom:10px;transition:transform .3s}
 .chapter-card:hover .card-num{transform:scale(1.1) rotate(10deg)}
 .card-emoji{font-size:1.8rem;margin-bottom:6px;display:block}
+.sys-icon{width:28px;height:28px;vertical-align:middle;border-radius:6px;object-fit:contain}
+.deco-icon{width:36px;height:36px;display:block;margin:0 auto 8px}
 .card-name{font-weight:700;font-size:.95rem;margin-bottom:3px}
 .card-count{color:var(--text3);font-size:.82rem}
 .card-badge{position:absolute;top:10px;right:10px;padding:2px 10px;border-radius:20px;font-size:.68rem;font-weight:700;background:var(--secondary);color:#fff}
@@ -360,7 +362,7 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none}
 
   <section class="chapters-section" id="chaptersSection">
     <div class="section-header reveal">
-      <span class="emoji-deco">🫀</span>
+      <img src="icons/all.png" class="sys-icon deco-icon" alt="Systems">
       <h2>Explore by Body System</h2>
       <p>Choose a system to discover conditions and listen to guidance songs</p>
     </div>
@@ -763,13 +765,14 @@ function toggleMobile(){document.getElementById('hamburger').classList.toggle('o
 // ===== RENDER =====
 function renderCatTabs(){
   const tabs=document.getElementById('catTabs');
-  tabs.innerHTML='<button class="cat-tab'+(activeCategory==='All'?' active':'')+'" onclick="filterCategory(\'All\')">🫀 All Systems</button>'+
+  tabs.innerHTML='<button class="cat-tab'+(activeCategory==='All'?' active':'')+'" onclick="filterCategory(\'All\')"><img src="icons/all.png" class="sys-icon" alt="All"> All Systems</button>'+
     SYSTEMS.map(s=>`<button class="cat-tab${activeCategory===s?' active':''}" onclick="filterCategory('${s}')">${getSystemIcon(s)} ${s}</button>`).join('');
 }
 
 function getSystemIcon(s){
-  const icons={Bladder:'💧',Bones:'🦴',Brain:'🧠',Cancer:'🎗️',Colon:'🔄',Ear:'👂',Eye:'👁️',Glands:'🧬',Heart:'❤️',Liver:'💚',Nerves:'⚡',Nose:'👃',Pancreas:'💉',Respiratory:'🫁',Skin:'🧴',Stomach:'💊',Teeth:'🦷',General:'💎'};
-  return icons[s]||'🏥';
+  const icons={Bladder:'bladder',Bones:'bones',Brain:'brain',Cancer:'cancer',Colon:'colon',Ear:'ear',Eye:'eye',Glands:'glands',Heart:'heart',Liver:'liver',Nerves:'nerves',Nose:'nose',Pancreas:'pancreas',Respiratory:'respiratory',Skin:'skin',Stomach:'stomach',Teeth:'teeth',General:'all'};
+  const n=icons[s]||'all';
+  return '<img src="icons/'+n+'.png" class="sys-icon" alt="'+s+'">';
 }
 
 function filterCategory(cat){
@@ -784,7 +787,7 @@ function renderChapters(){
   grid.innerHTML=filtered.map((c,i)=>`
     <div class="chapter-card reveal" style="animation-delay:${i*0.04}s" onclick="openChapter(${c.id})">
       <div class="card-num">${c.id}</div>
-      <span class="card-emoji">${c.icon}</span>
+      <span class="card-emoji">${getSystemIcon(c.system)}</span>
       <div class="card-name">${c.name}</div>
       <div class="card-count">${(c.songs||[]).length} tracks</div>
       <div class="card-system">${c.system}</div>
@@ -800,7 +803,7 @@ function openChapter(id){
   document.getElementById('heroSection').style.display='none';
   document.getElementById('chaptersSection').style.display='none';
   document.getElementById('songsSection').style.display='block';
-  document.getElementById('songsChapterTitle').textContent=currentChapter.icon+' '+currentChapter.name;
+  document.getElementById('songsChapterTitle').innerHTML=getSystemIcon(currentChapter.system)+' '+currentChapter.name;
   const sl=document.getElementById('songsList');
   if(!currentChapter.songs||!currentChapter.songs.length){
     sl.innerHTML='<div class="empty-state"><span class="emoji">🎵</span><p>No tracks yet — coming soon!</p></div>';
