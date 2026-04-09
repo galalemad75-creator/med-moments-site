@@ -664,7 +664,7 @@ const CHAPTERS=[
 // Heart
 {id:52,name:"Coronary Artery Disease",icon:"❤️",system:"Heart",tag:"Important",songs:[]},
 {id:53,name:"Heart Attack",icon:"💔",system:"Heart",tag:"Urgent",songs:[]},
-{id:54,name:"Heart Failure",icon:"🫀",system:"Heart",songs:[]},
+{id:54,name:"Heart Failure",icon:"❤️",system:"Heart",songs:[]},
 {id:55,name:"Cardiomyopathy",icon:"💗",system:"Heart",songs:[]},
 {id:56,name:"Arrhythmia",icon:"💓",system:"Heart",tag:"Common",songs:[]},
 {id:57,name:"Heart Valve Disease",icon:"🚪",system:"Heart",songs:[]},
@@ -847,7 +847,7 @@ window.addEventListener('scroll',()=>{document.getElementById('navbar').classLis
 // ===== HERO EMOJIS =====
 function createFloatingEmojis(){
   const bg=document.getElementById('heroBg');
-  const emojis=['🩺','💊','🏥','❤️','🫀','🧠','🦷','🫁','💉','🧬','🔬','🩹','💚','🧬','💔'];
+  const emojis=['🩺','💊','🏥','❤️','🩻','🧠','🦷','🫁','💉','🧬','🔬','🩹','💚','🧬','💔'];
   for(let i=0;i<15;i++){const el=document.createElement('span');el.className='emoji-float';el.textContent=emojis[i%emojis.length];el.style.left=Math.random()*100+'%';el.style.top=Math.random()*100+'%';el.style.animationDelay=(Math.random()*4)+'s';el.style.animationDuration=(4+Math.random()*4)+'s';el.style.fontSize=(2+Math.random()*3)+'rem';bg.appendChild(el);}
 }
 
