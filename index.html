@@ -30,6 +30,7 @@
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
+.card-emoji,.cat-tab,.mc-icon,.hero-badge,.emoji-float,.pg-icon,.big-emoji,.emoji-deco,.fp-icon{font-family:'Segoe UI Emoji','Apple Color Emoji','Noto Color Emoji','Twemoji Mozilla',sans-serif}
 body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;transition:background .4s,color .4s}
 a{color:var(--primary);text-decoration:none}
 a:hover{text-decoration:underline}
@@ -267,6 +268,29 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none}
   .player-inner{gap:6px}
   .player-btn{width:38px;height:38px;font-size:.85rem}
 }
+
+/* ===== COOKIE CONSENT ===== */
+.cookie-consent{position:fixed;bottom:0;left:0;right:0;z-index:9998;background:var(--nav-bg);backdrop-filter:blur(20px);border-top:2px solid var(--primary);padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;animation:slideUp .5s ease;box-shadow:0 -4px 20px var(--shadow)}
+.cookie-consent.hidden{display:none}
+.cookie-text{flex:1;min-width:200px;font-size:.88rem;color:var(--text2);line-height:1.5}
+.cookie-text a{color:var(--primary);font-weight:600}
+.cookie-btns{display:flex;gap:8px;flex-shrink:0}
+.cookie-btn{padding:8px 20px;border-radius:30px;font-weight:700;font-size:.85rem;transition:all .3s;cursor:pointer}
+.cookie-accept{background:var(--gradient);color:#fff}
+.cookie-accept:hover{transform:translateY(-2px)}
+.cookie-reject{background:var(--bg2);color:var(--text2);border:2px solid var(--border)}
+.cookie-reject:hover{border-color:var(--primary)}
+
+/* ===== AD PLACEHOLDERS ===== */
+.ad-placeholder{background:var(--bg2);border:2px dashed var(--border);border-radius:var(--radius-sm);padding:20px;text-align:center;margin:20px auto;max-width:728px;position:relative;min-height:60px;display:flex;align-items:center;justify-content:center}
+.ad-placeholder .ad-label{font-size:.68rem;color:var(--text3);text-transform:uppercase;letter-spacing:1px;font-weight:600;position:absolute;top:4px;left:50%;transform:translateX(-50%);opacity:.7}
+.ad-placeholder .ad-code{width:100%;display:block}
+.ad-placeholder .ad-code iframe,.ad-placeholder .ad-code ins{display:block!important;margin:0 auto!important}
+.ad-inline{grid-column:1/-1}
+
+@media(max-width:600px){
+  .cookie-consent{flex-direction:column;text-align:center}
+}
 </style>
 </head>
 <body>
@@ -324,6 +348,12 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none}
       </div>
     </div>
   </section>
+
+  <!-- Ad: After Hero -->
+  <div class="ad-placeholder" id="ad-hero" style="display:none">
+    <span class="ad-label">Advertisement</span>
+    <div class="ad-code" id="ad-hero-code"></div>
+  </div>
 
   <section class="chapters-section" id="chaptersSection">
     <div class="section-header reveal">
@@ -549,6 +579,12 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none}
 <!-- BACK TO TOP -->
 <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
+<!-- AD: Before Footer -->
+<div class="ad-placeholder" id="ad-footer" style="display:none;margin-bottom:0">
+  <span class="ad-label">Advertisement</span>
+  <div class="ad-code" id="ad-footer-code"></div>
+</div>
+
 <!-- FOOTER -->
 <footer class="footer" id="mainFooter">
   <div class="footer-grid">
@@ -564,7 +600,7 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none}
 // ===== CHAPTERS DATA =====
 const CHAPTERS=[
 // Bladder
-{id:1,name:"Cystitis",icon:"🫧",system:"Bladder",songs:[]},
+{id:1,name:"Cystitis",icon:"💧",system:"Bladder",songs:[]},
 {id:2,name:"Urinary Incontinence",icon:"💧",system:"Bladder",songs:[]},
 {id:3,name:"Bladder Stones",icon:"🪨",system:"Bladder",songs:[]},
 {id:4,name:"Bladder Cancer",icon:"🎗️",system:"Bladder",tag:"Important",songs:[]},
@@ -572,7 +608,7 @@ const CHAPTERS=[
 // Bones
 {id:6,name:"Osteoporosis",icon:"🦴",system:"Bones",songs:[]},
 {id:7,name:"Arthritis",icon:"🦿",system:"Bones",tag:"Common",songs:[]},
-{id:8,name:"Fractures",icon:"🩻",system:"Bones",songs:[]},
+{id:8,name:"Fractures",icon:"💔",system:"Bones",songs:[]},
 {id:9,name:"Bone Cancer",icon:"🎗️",system:"Bones",songs:[]},
 {id:10,name:"Back Pain",icon:"🔙",system:"Bones",tag:"Common",songs:[]},
 {id:11,name:"Herniated Disc",icon:"💿",system:"Bones",songs:[]},
@@ -613,15 +649,15 @@ const CHAPTERS=[
 {id:42,name:"Swimmer's Ear",icon:"🏊",system:"Ear",songs:[]},
 // Eye
 {id:43,name:"Glaucoma",icon:"👁️",system:"Eye",songs:[]},
-{id:44,name:"Cataracts",icon:"🫥",system:"Eye",tag:"Common",songs:[]},
+{id:44,name:"Cataracts",icon:"😑",system:"Eye",tag:"Common",songs:[]},
 {id:45,name:"Retinal Detachment",icon:"🔴",system:"Eye",tag:"Urgent",songs:[]},
 {id:46,name:"Conjunctivitis",icon:"👀",system:"Eye",songs:[]},
 // Glands
 {id:47,name:"Thyroid Gland",icon:"🦋",system:"Glands",tag:"Common",songs:[]},
 {id:48,name:"Adrenal Gland",icon:"🔺",system:"Glands",songs:[]},
-{id:49,name:"Pancreas Disorders",icon:"🫗",system:"Glands",songs:[]},
+{id:49,name:"Pancreas Disorders",icon:"💉",system:"Glands",songs:[]},
 {id:50,name:"Pituitary Gland",icon:"🧬",system:"Glands",songs:[]},
-{id:51,name:"Lymph Nodes",icon:"🫧",system:"Glands",songs:[]},
+{id:51,name:"Lymph Nodes",icon:"💧",system:"Glands",songs:[]},
 // Heart
 {id:52,name:"Coronary Artery Disease",icon:"❤️",system:"Heart",tag:"Important",songs:[]},
 {id:53,name:"Heart Attack",icon:"💔",system:"Heart",tag:"Urgent",songs:[]},
@@ -729,7 +765,7 @@ function renderCatTabs(){
 }
 
 function getSystemIcon(s){
-  const icons={Bladder:'🫧',Bones:'🦴',Brain:'🧠',Cancer:'🎗️',Colon:'🔄',Ear:'👂',Eye:'👁️',Glands:'🧬',Heart:'❤️',Liver:'💚',Nerves:'⚡',Nose:'👃',Pancreas:'🩸',Respiratory:'🫁',Skin:'🧴',Stomach:'🫄',Teeth:'🦷',General:'💎'};
+  const icons={Bladder:'💧',Bones:'🦴',Brain:'🧠',Cancer:'🎗️',Colon:'🔄',Ear:'👂',Eye:'👁️',Glands:'🧬',Heart:'❤️',Liver:'💚',Nerves:'⚡',Nose:'👃',Pancreas:'💉',Respiratory:'🫁',Skin:'🧴',Stomach:'💊',Teeth:'🦷',General:'💎'};
   return icons[s]||'🏥';
 }
 
@@ -808,7 +844,7 @@ window.addEventListener('scroll',()=>{document.getElementById('navbar').classLis
 // ===== HERO EMOJIS =====
 function createFloatingEmojis(){
   const bg=document.getElementById('heroBg');
-  const emojis=['🩺','💊','🏥','❤️','🫀','🧠','🦷','🫁','💉','🧬','🔬','🩹','💚','🧬','🩻'];
+  const emojis=['🩺','💊','🏥','❤️','🫀','🧠','🦷','🫁','💉','🧬','🔬','🩹','💚','🧬','💔'];
   for(let i=0;i<15;i++){const el=document.createElement('span');el.className='emoji-float';el.textContent=emojis[i%emojis.length];el.style.left=Math.random()*100+'%';el.style.top=Math.random()*100+'%';el.style.animationDelay=(Math.random()*4)+'s';el.style.animationDuration=(4+Math.random()*4)+'s';el.style.fontSize=(2+Math.random()*3)+'rem';bg.appendChild(el);}
 }
 
@@ -835,11 +871,52 @@ async function init(){
     try{const r=await fetch('/data/chapters.json?t='+Date.now());const d=await r.json();if(Array.isArray(d)&&d.length>0)chapters=d;}catch(e1){}
   }
   renderCatTabs();renderChapters();
+  renderAds();initCookieConsent();
   const hash=location.hash.replace('#','');if(hash&&document.getElementById('page-'+hash))navigate(hash);
   setTimeout(spawnConfetti,800);
 }
 init();
 </script>
 <script>if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});</script>
+
+<script>
+// ===== AD MANAGEMENT =====
+function getAdCode(slot){return localStorage.getItem('ht_ad_'+slot)||'';}
+
+function renderAds(){
+  ['hero','footer'].forEach(function(slot){
+    var el=document.getElementById('ad-'+slot);
+    var codeEl=document.getElementById('ad-'+slot+'-code');
+    if(!el||!codeEl)return;
+    var code=getAdCode(slot);
+    if(code){
+      codeEl.innerHTML=code;
+      el.style.display='flex';
+      // Execute scripts in ad code
+      var scripts=codeEl.querySelectorAll('script');
+      scripts.forEach(function(old){
+        var s=document.createElement('script');
+        Array.from(old.attributes).forEach(function(a){s.setAttribute(a.name,a.value);});
+        s.textContent=old.textContent;
+        old.parentNode.replaceChild(s,old);
+      });
+    }else{
+      el.style.display='none';
+    }
+  });
+}
+
+// ===== COOKIE CONSENT =====
+function initCookieConsent(){
+  if(localStorage.getItem('ht_cookie_consent'))return;
+  var banner=document.createElement('div');
+  banner.className='cookie-consent';
+  banner.innerHTML='<div class="cookie-text">🍪 We use cookies to improve your experience, analyze site usage, and serve ads via Google AdSense. By continuing, you agree to our <a href="#" onclick="navigate(\'privacy\');closeCookieBanner()">Privacy Policy</a>.</div><div class="cookie-btns"><button class="cookie-btn cookie-accept" onclick="acceptCookies()">Accept All</button><button class="cookie-btn cookie-reject" onclick="rejectCookies()">Reject</button></div>';
+  document.body.appendChild(banner);
+}
+function acceptCookies(){localStorage.setItem('ht_cookie_consent','accepted');closeCookieBanner();}
+function rejectCookies(){localStorage.setItem('ht_cookie_consent','rejected');closeCookieBanner();}
+function closeCookieBanner(){var b=document.querySelector('.cookie-consent');if(b){b.style.animation='slideUp .3s ease reverse';setTimeout(function(){b.remove();},300);}}
+</script>
 </body>
 </html>
