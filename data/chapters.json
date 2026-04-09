@@ -2,7 +2,7 @@
   {
     "id": 1,
     "name": "Cystitis",
-    "icon": "🫧",
+    "icon": "💧",
     "system": "Bladder",
     "songs": [
       {
@@ -59,7 +59,7 @@
   {
     "id": 8,
     "name": "Fractures",
-    "icon": "🩻",
+    "icon": "💔",
     "system": "Bones",
     "songs": []
   },
@@ -319,7 +319,7 @@
   {
     "id": 44,
     "name": "Cataracts",
-    "icon": "🫥",
+    "icon": "😑",
     "system": "Eye",
     "tag": "Common",
     "songs": []
@@ -357,7 +357,7 @@
   {
     "id": 49,
     "name": "Pancreas Disorders",
-    "icon": "🫗",
+    "icon": "💉",
     "system": "Glands",
     "songs": []
   },
@@ -371,7 +371,7 @@
   {
     "id": 51,
     "name": "Lymph Nodes",
-    "icon": "🫧",
+    "icon": "💧",
     "system": "Glands",
     "songs": []
   },
