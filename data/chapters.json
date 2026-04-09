@@ -15,14 +15,14 @@
   {
     "id": 2,
     "name": "Urinary Incontinence",
-    "icon": "🚿",
+    "icon": "🚽",
     "system": "Bladder",
     "songs": []
   },
   {
     "id": 3,
     "name": "Bladder Stones",
-    "icon": "💠",
+    "icon": "🪨",
     "system": "Bladder",
     "songs": []
   },
@@ -37,7 +37,7 @@
   {
     "id": 5,
     "name": "Urinary Retention",
-    "icon": "🚰",
+    "icon": "🚱",
     "system": "Bladder",
     "songs": []
   },
@@ -51,7 +51,7 @@
   {
     "id": 7,
     "name": "Arthritis",
-    "icon": "🌡️",
+    "icon": "🔥",
     "system": "Bones",
     "tag": "Common",
     "songs": []
@@ -59,7 +59,7 @@
   {
     "id": 8,
     "name": "Fractures",
-    "icon": "💥",
+    "icon": "🦴",
     "system": "Bones",
     "songs": []
   },
@@ -73,7 +73,7 @@
   {
     "id": 10,
     "name": "Back Pain",
-    "icon": "😣",
+    "icon": "😫",
     "system": "Bones",
     "tag": "Common",
     "songs": []
@@ -81,14 +81,14 @@
   {
     "id": 11,
     "name": "Herniated Disc",
-    "icon": "⚙️",
+    "icon": "💿",
     "system": "Bones",
     "songs": []
   },
   {
     "id": 12,
     "name": "Muscle Atrophy",
-    "icon": "🦾",
+    "icon": "📉",
     "system": "Bones",
     "songs": []
   },
@@ -109,7 +109,7 @@
   {
     "id": 15,
     "name": "Migraine",
-    "icon": "🤕",
+    "icon": "🧠",
     "system": "Brain",
     "tag": "Common",
     "songs": []
@@ -117,7 +117,7 @@
   {
     "id": 16,
     "name": "Alzheimer's Disease",
-    "icon": "🧓",
+    "icon": "🧩",
     "system": "Brain",
     "tag": "Important",
     "songs": []
@@ -132,7 +132,7 @@
   {
     "id": 18,
     "name": "Stroke",
-    "icon": "⚡",
+    "icon": "🩸",
     "system": "Brain",
     "tag": "Urgent",
     "songs": []
@@ -155,63 +155,63 @@
   {
     "id": 21,
     "name": "Lung Cancer",
-    "icon": "🫁",
+    "icon": "🎗️",
     "system": "Cancer",
     "songs": []
   },
   {
     "id": 22,
     "name": "Colorectal Cancer",
-    "icon": "🟢",
+    "icon": "🎗️",
     "system": "Cancer",
     "songs": []
   },
   {
     "id": 23,
     "name": "Prostate Cancer",
-    "icon": "🔵",
+    "icon": "🎗️",
     "system": "Cancer",
     "songs": []
   },
   {
     "id": 24,
     "name": "Skin Cancer",
-    "icon": "🧴",
+    "icon": "🎗️",
     "system": "Cancer",
     "songs": []
   },
   {
     "id": 25,
     "name": "Stomach Cancer",
-    "icon": "🟡",
+    "icon": "🎗️",
     "system": "Cancer",
     "songs": []
   },
   {
     "id": 26,
     "name": "Liver Cancer",
-    "icon": "🟤",
+    "icon": "🎗️",
     "system": "Cancer",
     "songs": []
   },
   {
     "id": 27,
     "name": "Esophageal Cancer",
-    "icon": "⚫",
+    "icon": "🎗️",
     "system": "Cancer",
     "songs": []
   },
   {
     "id": 28,
     "name": "Cervical Cancer",
-    "icon": "🟣",
+    "icon": "🎗️",
     "system": "Cancer",
     "songs": []
   },
   {
     "id": 29,
     "name": "Kidney Cancer",
-    "icon": "🫘",
+    "icon": "🎗️",
     "system": "Cancer",
     "songs": []
   },
@@ -239,7 +239,7 @@
   {
     "id": 33,
     "name": "Appendicitis",
-    "icon": "🚨",
+    "icon": "⚠️",
     "system": "Colon",
     "tag": "Urgent",
     "songs": []
@@ -291,7 +291,7 @@
   {
     "id": 40,
     "name": "Vertigo",
-    "icon": "😵",
+    "icon": "🌀",
     "system": "Ear",
     "songs": []
   },
@@ -305,7 +305,7 @@
   {
     "id": 42,
     "name": "Swimmer's Ear",
-    "icon": "💧",
+    "icon": "🏊",
     "system": "Ear",
     "songs": []
   },
@@ -319,7 +319,7 @@
   {
     "id": 44,
     "name": "Cataracts",
-    "icon": "👓",
+    "icon": "☁️",
     "system": "Eye",
     "tag": "Common",
     "songs": []
@@ -327,7 +327,7 @@
   {
     "id": 45,
     "name": "Retinal Detachment",
-    "icon": "👁️‍🗨️",
+    "icon": "👁️",
     "system": "Eye",
     "tag": "Urgent",
     "songs": []
@@ -371,7 +371,7 @@
   {
     "id": 51,
     "name": "Lymph Nodes",
-    "icon": "⭕",
+    "icon": "🔴",
     "system": "Glands",
     "songs": []
   },
@@ -416,7 +416,7 @@
   {
     "id": 57,
     "name": "Heart Valve Disease",
-    "icon": "🫀",
+    "icon": "🚪",
     "system": "Heart",
     "songs": []
   },
@@ -437,7 +437,7 @@
   {
     "id": 60,
     "name": "The Strength Within",
-    "icon": "💪",
+    "icon": "💚",
     "system": "Liver",
     "songs": []
   },
@@ -516,14 +516,14 @@
   {
     "id": 71,
     "name": "Nasal Polyps",
-    "icon": "⭕",
+    "icon": "🔴",
     "system": "Nose",
     "songs": []
   },
   {
     "id": 72,
     "name": "Deviated Septum",
-    "icon": "👃",
+    "icon": "📐",
     "system": "Nose",
     "songs": []
   },
@@ -566,7 +566,7 @@
   {
     "id": 78,
     "name": "Chronic Pancreatitis",
-    "icon": "♻️",
+    "icon": "🔄",
     "system": "Pancreas",
     "songs": []
   },
@@ -619,7 +619,7 @@
   {
     "id": 85,
     "name": "Rise Above",
-    "icon": "🔥",
+    "icon": "⬆️",
     "system": "Respiratory",
     "songs": []
   },
@@ -640,7 +640,7 @@
   {
     "id": 88,
     "name": "Albinism",
-    "icon": "⬜",
+    "icon": "🤍",
     "system": "Skin",
     "songs": []
   },
@@ -705,7 +705,7 @@
   {
     "id": 97,
     "name": "Measles",
-    "icon": "⭕",
+    "icon": "🔴",
     "system": "Skin",
     "songs": []
   },
@@ -727,7 +727,7 @@
   {
     "id": 100,
     "name": "Acid Reflux",
-    "icon": "🔥",
+    "icon": "⬆️",
     "system": "Stomach",
     "tag": "Common",
     "songs": []
@@ -749,7 +749,7 @@
   {
     "id": 103,
     "name": "Duodenal Ulcer",
-    "icon": "⭕",
+    "icon": "🔴",
     "system": "Stomach",
     "songs": []
   },
@@ -764,7 +764,7 @@
   {
     "id": 105,
     "name": "Tongue Health",
-    "icon": "👅",
+    "icon": "👄",
     "system": "Teeth",
     "songs": []
   },
