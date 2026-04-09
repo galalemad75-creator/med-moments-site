@@ -178,7 +178,10 @@ body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--
 
     <!-- Chapters Panel -->
     <div class="panel" id="p-chapters">
-      <input type="text" class="search" placeholder="🔍 Search chapters..." oninput="filterCh(this.value)">
+      <div style="display:flex;gap:8px;align-items:center;margin-bottom:12px">
+        <input type="text" class="search" placeholder="🔍 Search chapters..." oninput="filterCh(this.value)" style="flex:1">
+        <button class="bs green" onclick="saveChapters()">💾 Save All</button>
+      </div>
       <div class="system-filter" id="sysFilter"></div>
       <div class="ch-list" id="chList"><p style="text-align:center;color:var(--text2);padding:30px">Loading...</p></div>
     </div>
@@ -410,6 +413,7 @@ function renderChapters(filter = '') {
           <div class="name">${c.name} <span style="font-size:.75rem;color:var(--text2)">(${c.system})</span></div>
           <div class="count">${(c.songs || []).length} song${(c.songs || []).length !== 1 ? 's' : ''}</div>
         </div>
+        <button class="bs ghost" onclick="event.stopPropagation();editIcon(${c.id},'${c.icon.replace(/'/g,"\\'")}')" title="Change emoji">✏️</button>
       </div>
       <div class="song-list" style="display:none">
         ${!(c.songs || []).length ? '<p style="color:var(--text2);font-size:.8rem;padding:6px">No songs yet</p>' :
@@ -427,6 +431,27 @@ function renderChapters(filter = '') {
 }
 
 function filterCh(v) { renderChapters(v); }
+
+function editIcon(id, oldIcon) {
+  const newIcon = prompt('Change emoji for this chapter:\n(Type a single emoji)', oldIcon);
+  if (!newIcon || newIcon === oldIcon) return;
+  const ch = chapters.find(c => c.id === id);
+  if (ch) {
+    ch.icon = newIcon.trim();
+    renderChapters();
+    renderSysFilter();
+    toast('Emoji updated! Click 💾 Save All to deploy.', 'success');
+  }
+}
+
+async function saveChapters() {
+  try {
+    await saveToGitHub(chapters);
+    toast('All chapters saved & deployed!', 'success');
+  } catch(e) {
+    toast('Error: ' + e.message, 'error');
+  }
+}
 
 function populateSelects() {
   const opts = '<option value="">Select chapter...</option>' + chapters.map(c => `<option value="${c.id}">${c.icon} ${c.name} (${c.system})</option>`).join('');
