@@ -22,7 +22,7 @@
   {
     "id": 3,
     "name": "Bladder Stones",
-    "icon": "🪨",
+    "icon": "💎",
     "system": "Bladder",
     "songs": []
   },
@@ -155,7 +155,7 @@
   {
     "id": 21,
     "name": "Lung Cancer",
-    "icon": "🫁",
+    "icon": "🎗️",
     "system": "Cancer",
     "songs": []
   },
@@ -211,7 +211,7 @@
   {
     "id": 29,
     "name": "Kidney Cancer",
-    "icon": "🫘",
+    "icon": "🎗️",
     "system": "Cancer",
     "songs": []
   },
@@ -596,7 +596,7 @@
   {
     "id": 82,
     "name": "Bronchitis",
-    "icon": "🫁",
+    "icon": "🫧",
     "system": "Respiratory",
     "tag": "Common",
     "songs": []
