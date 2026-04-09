@@ -784,7 +784,7 @@ function renderChapters(){
   grid.innerHTML=filtered.map((c,i)=>`
     <div class="chapter-card reveal" style="animation-delay:${i*0.04}s" onclick="openChapter(${c.id})">
       <div class="card-num">${c.id}</div>
-      <span class="card-emoji">${c.icon}</span>
+      <span class="card-emoji">${c.iconImg ? '<img src="'+c.iconImg+'" class="sys-icon" style="width:36px;height:36px" alt="'+c.name+'">' : c.icon}</span>
       <div class="card-name">${c.name}</div>
       <div class="card-count">${(c.songs||[]).length} tracks</div>
       <div class="card-system">${c.system}</div>
@@ -800,7 +800,7 @@ function openChapter(id){
   document.getElementById('heroSection').style.display='none';
   document.getElementById('chaptersSection').style.display='none';
   document.getElementById('songsSection').style.display='block';
-  document.getElementById('songsChapterTitle').textContent=currentChapter.icon+' '+currentChapter.name;
+  document.getElementById('songsChapterTitle').innerHTML=(currentChapter.iconImg ? '<img src="'+currentChapter.iconImg+'" class="sys-icon" style="width:36px;height:36px" alt="">' : currentChapter.icon)+' '+currentChapter.name;
   const sl=document.getElementById('songsList');
   if(!currentChapter.songs||!currentChapter.songs.length){
     sl.innerHTML='<div class="empty-state"><span class="emoji">🎵</span><p>No tracks yet — coming soon!</p></div>';
