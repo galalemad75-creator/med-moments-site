@@ -389,7 +389,7 @@ function render() {
 function renderSysFilter() {
   const systems = ['All', ...new Set(chapters.map(c => c.system))];
   document.getElementById('sysFilter').innerHTML = systems.map(s =>
-    `<button class="sys-btn${activeSys === s ? ' active' : ''}" onclick="filterSys('${s}')">${s === 'All' ? '🫀 All' : s}</button>`
+    `<button class="sys-btn${activeSys === s ? ' active' : ''}" onclick="filterSys('${s}')">${s === 'All' ? '🏥 All' : s}</button>`
   ).join('');
 }
 
