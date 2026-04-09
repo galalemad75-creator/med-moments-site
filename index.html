@@ -360,7 +360,7 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none}
 
   <section class="chapters-section" id="chaptersSection">
     <div class="section-header reveal">
-      <span class="emoji-deco">🫀</span>
+      <span class="emoji-deco">🏥</span>
       <h2>Explore by Body System</h2>
       <p>Choose a system to discover conditions and listen to guidance songs</p>
     </div>
@@ -763,7 +763,7 @@ function toggleMobile(){document.getElementById('hamburger').classList.toggle('o
 // ===== RENDER =====
 function renderCatTabs(){
   const tabs=document.getElementById('catTabs');
-  tabs.innerHTML='<button class="cat-tab'+(activeCategory==='All'?' active':'')+'" onclick="filterCategory(\'All\')">🫀 All Systems</button>'+
+  tabs.innerHTML='<button class="cat-tab'+(activeCategory==='All'?' active':'')+'" onclick="filterCategory(\'All\')">🏥 All Systems</button>'+
     SYSTEMS.map(s=>`<button class="cat-tab${activeCategory===s?' active':''}" onclick="filterCategory('${s}')">${getSystemIcon(s)} ${s}</button>`).join('');
 }
 
