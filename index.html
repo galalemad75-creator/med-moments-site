@@ -11,7 +11,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-/* Emoji rendering handled by Twemoji JS */
+/* Emoji font for cross-platform emoji rendering */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap');
 
 :root{
   --bg:#F0F9FF;--bg2:#E0F2FE;--bg-card:#FFFFFF;
@@ -920,8 +921,5 @@ function acceptCookies(){localStorage.setItem('ht_cookie_consent','accepted');cl
 function rejectCookies(){localStorage.setItem('ht_cookie_consent','rejected');closeCookieBanner();}
 function closeCookieBanner(){var b=document.querySelector('.cookie-consent');if(b){b.style.animation='slideUp .3s ease reverse';setTimeout(function(){b.remove();},300);}}
 </script>
-<!-- Twemoji: Cross-platform emoji rendering -->
-<script src="https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js" crossorigin="anonymous"></script>
-<script>twemoji.parse(document.body,{folder:'svg',ext:'.svg'});</script>
 </body>
 </html>
