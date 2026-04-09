@@ -29,7 +29,7 @@
   {
     "id": 4,
     "name": "Bladder Cancer",
-    "icon": "🎗️",
+    "icon": "🏥",
     "system": "Bladder",
     "tag": "Important",
     "songs": []
@@ -66,7 +66,7 @@
   {
     "id": 9,
     "name": "Bone Cancer",
-    "icon": "🎗️",
+    "icon": "🦴",
     "system": "Bones",
     "songs": []
   },
@@ -211,7 +211,7 @@
   {
     "id": 29,
     "name": "Kidney Cancer",
-    "icon": "🎗️",
+    "icon": "🫘",
     "system": "Cancer",
     "songs": []
   },
@@ -676,7 +676,7 @@
   {
     "id": 93,
     "name": "Skin Cancer",
-    "icon": "🎗️",
+    "icon": "🏥",
     "system": "Skin",
     "songs": []
   },
