@@ -603,16 +603,16 @@ button{font-family:inherit;cursor:pointer;border:none;outline:none}
 // ===== CHAPTERS DATA =====
 const CHAPTERS=[
 // Bladder
-{id:1,name:"Cystitis",icon:"🚽",system:"Bladder",songs:[]},
+{id:1,name:"Cystitis",icon:"💧",system:"Bladder",songs:[{"title": "Cystitis", "audio": "https://res.cloudinary.com/dse1s0loh/video/upload/v1775591110/healtunes/audio/bigygqexvsu23aiknlgp.mp3", "image": ""}]},
 {id:2,name:"Urinary Incontinence",icon:"🚽",system:"Bladder",songs:[]},
 {id:3,name:"Bladder Stones",icon:"🪨",system:"Bladder",songs:[]},
-{id:4,name:"Bladder Cancer",icon:"🎗️",system:"Bladder",tag:"Important",songs:[]},
+{id:4,name:"Bladder Cancer",icon:"🏥",system:"Bladder",tag:"Important",songs:[]},
 {id:5,name:"Urinary Retention",icon:"🚱",system:"Bladder",songs:[]},
 // Bones
 {id:6,name:"Osteoporosis",icon:"🦴",system:"Bones",songs:[]},
 {id:7,name:"Arthritis",icon:"🔥",system:"Bones",tag:"Common",songs:[]},
 {id:8,name:"Fractures",icon:"🦴",system:"Bones",songs:[]},
-{id:9,name:"Bone Cancer",icon:"🎗️",system:"Bones",songs:[]},
+{id:9,name:"Bone Cancer",icon:"🦴",system:"Bones",songs:[]},
 {id:10,name:"Back Pain",icon:"😫",system:"Bones",tag:"Common",songs:[]},
 {id:11,name:"Herniated Disc",icon:"💿",system:"Bones",songs:[]},
 {id:12,name:"Muscle Atrophy",icon:"📉",system:"Bones",songs:[]},
@@ -626,15 +626,15 @@ const CHAPTERS=[
 {id:19,name:"Epilepsy",icon:"⚡",system:"Brain",songs:[]},
 // Cancer
 {id:20,name:"Breast Cancer",icon:"🎀",system:"Cancer",tag:"Important",songs:[]},
-{id:21,name:"Lung Cancer",icon:"🎗️",system:"Cancer",songs:[]},
-{id:22,name:"Colorectal Cancer",icon:"🎗️",system:"Cancer",songs:[]},
-{id:23,name:"Prostate Cancer",icon:"🎗️",system:"Cancer",songs:[]},
-{id:24,name:"Skin Cancer",icon:"🎗️",system:"Cancer",songs:[]},
-{id:25,name:"Stomach Cancer",icon:"🎗️",system:"Cancer",songs:[]},
-{id:26,name:"Liver Cancer",icon:"🎗️",system:"Cancer",songs:[]},
-{id:27,name:"Esophageal Cancer",icon:"🎗️",system:"Cancer",songs:[]},
-{id:28,name:"Cervical Cancer",icon:"🎗️",system:"Cancer",songs:[]},
-{id:29,name:"Kidney Cancer",icon:"🎗️",system:"Cancer",songs:[]},
+{id:21,name:"Lung Cancer",icon:"🫁",system:"Cancer",songs:[]},
+{id:22,name:"Colorectal Cancer",icon:"🟢",system:"Cancer",songs:[]},
+{id:23,name:"Prostate Cancer",icon:"🔵",system:"Cancer",songs:[]},
+{id:24,name:"Skin Cancer",icon:"🧴",system:"Cancer",songs:[]},
+{id:25,name:"Stomach Cancer",icon:"🟡",system:"Cancer",songs:[]},
+{id:26,name:"Liver Cancer",icon:"🟤",system:"Cancer",songs:[]},
+{id:27,name:"Esophageal Cancer",icon:"⚫",system:"Cancer",songs:[]},
+{id:28,name:"Cervical Cancer",icon:"🟣",system:"Cancer",songs:[]},
+{id:29,name:"Kidney Cancer",icon:"🫘",system:"Cancer",songs:[]},
 {id:30,name:"Leukemia & Lymphoma",icon:"🩸",system:"Cancer",songs:[]},
 // Colon
 {id:31,name:"Colitis",icon:"🔥",system:"Colon",songs:[]},
@@ -659,7 +659,7 @@ const CHAPTERS=[
 {id:47,name:"Thyroid Gland",icon:"🦋",system:"Glands",tag:"Common",songs:[]},
 {id:48,name:"Adrenal Gland",icon:"💪",system:"Glands",songs:[]},
 {id:49,name:"Pancreas Disorders",icon:"💉",system:"Glands",songs:[]},
-{id:50,name:"Pituitary Gland",icon:"🔥",system:"Glands",songs:[]},
+{id:50,name:"Pituitary Gland",icon:"🧬",system:"Glands",songs:[]},
 {id:51,name:"Lymph Nodes",icon:"🔴",system:"Glands",songs:[]},
 // Heart
 {id:52,name:"Coronary Artery Disease",icon:"❤️",system:"Heart",tag:"Important",songs:[]},
@@ -709,7 +709,7 @@ const CHAPTERS=[
 {id:90,name:"Tinea (Ringworm)",icon:"🔬",system:"Skin",songs:[]},
 {id:91,name:"Eczema",icon:"🔥",system:"Skin",tag:"Common",songs:[]},
 {id:92,name:"Psoriasis",icon:"🔥",system:"Skin",songs:[]},
-{id:93,name:"Skin Cancer",icon:"🎗️",system:"Skin",songs:[]},
+{id:93,name:"Skin Cancer",icon:"🏥",system:"Skin",songs:[]},
 {id:94,name:"Dermatitis",icon:"😖",system:"Skin",songs:[]},
 {id:95,name:"Hair Loss",icon:"💇",system:"Skin",tag:"Common",songs:[]},
 {id:96,name:"Alopecia",icon:"🔵",system:"Skin",songs:[]},
@@ -725,8 +725,8 @@ const CHAPTERS=[
 {id:104,name:"Teeth Care",icon:"🦷",system:"Teeth",tag:"Common",songs:[]},
 {id:105,name:"Tongue Health",icon:"👄",system:"Teeth",songs:[]},
 {id:106,name:"Throat & Larynx",icon:"🗣️",system:"Teeth",songs:[]},
-// Misc
-{id:107,name:"The Truth Within",icon:"🏥",system:"General",tag:"Featured",songs:[]}
+// General
+{id:107,name:"The Truth Within",icon:"🏥",system:"General",tag:"Featured",songs:[]},
 ];
 
 let chapters=CHAPTERS.map(c=>({...c,songs:c.songs||[]}));
