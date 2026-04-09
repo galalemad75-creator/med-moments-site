@@ -922,8 +922,8 @@ function closeCookieBanner(){var b=document.querySelector('.cookie-consent');if(
 </script>
 <script src="https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js" crossorigin="anonymous"></script>
 <script>
-if(typeof twemoji!=='undefined'){twemoji.parse(document.body,{folder:'svg',ext:'.svg'});}
-else{var s2=document.createElement('script');s2.src='https://unpkg.com/twemoji@14.0.2/dist/twemoji.min.js';s2.crossOrigin='anonymous';s2.onload=function(){twemoji.parse(document.body,{folder:'svg',ext:'.svg'});};document.head.appendChild(s2);}
+if(typeof twemoji!=='undefined'){twemoji.parse(document.body,{folder:'svg',ext:'.svg',base:'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/'});}
+else{var s2=document.createElement('script');s2.src='https://unpkg.com/twemoji@14.0.2/dist/twemoji.min.js';s2.crossOrigin='anonymous';s2.onload=function(){twemoji.parse(document.body,{folder:'svg',ext:'.svg',base:'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/'});};document.head.appendChild(s2);}
 </script>
 </body>
 </html>
